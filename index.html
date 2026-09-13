@@ -256,14 +256,49 @@ footer{padding-block:38px;}
 .kpi-n span{font-size:20px;font-weight:600;color:var(--text-2);margin-left:3px;}
 .kpi-l{font-size:13px;font-weight:500;color:var(--text-2);margin-bottom:6px;line-height:1.4;}
 .kpi-src{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);letter-spacing:.3px;}
+.kpi-delta{display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;padding:2px 7px;border-radius:3px;margin-top:6px;}
+.kpi-delta.up{background:var(--danger-bg);color:var(--danger);}
+.kpi-delta.new{background:var(--violet-bg);color:var(--violet);}
+
+/* GROWTH CHART */
+.growth-chart{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;margin-top:20px;}
+.gc-title{font-weight:600;font-size:14px;color:var(--text);margin-bottom:6px;}
+.gc-sub{font-size:12px;color:var(--text-3);margin-bottom:24px;}
+.gc-bars{display:flex;align-items:flex-end;gap:12px;height:140px;}
+.gc-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;}
+.gc-bar-wrap{flex:1;display:flex;align-items:flex-end;width:100%;}
+.gc-bar{width:100%;border-radius:4px 4px 0 0;position:relative;min-height:4px;transition:opacity .2s;}
+.gc-bar.cur{box-shadow:0 0 12px rgba(232,131,16,.25);}
+.gc-val{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--text-2);white-space:nowrap;}
+.gc-val.cur{color:var(--accent-br);}
+.gc-year{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);white-space:nowrap;}
+.gc-year.cur{color:var(--accent-br);}
+.gc-proj{font-size:11px;color:var(--text-3);font-style:italic;margin-top:10px;}
+
+/* FRAUD TYPES */
 .fraud-types{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;margin-top:20px;}
-.fraud-types-t{font-weight:600;font-size:14px;color:var(--text);margin-bottom:20px;}
+.fraud-types-t{font-weight:600;font-size:14px;color:var(--text);margin-bottom:6px;}
+.fraud-types-s{font-size:12px;color:var(--text-3);margin-bottom:20px;}
 .fbar-list{display:flex;flex-direction:column;gap:12px;}
 .fbar-row{display:flex;align-items:center;gap:14px;}
 .fbar-label{font-size:13px;color:var(--text-2);width:230px;flex-shrink:0;}
-.fbar-track{flex:1;background:var(--bg-2);border-radius:3px;height:6px;overflow:hidden;}
+.fbar-track{flex:1;background:var(--bg-2);border-radius:3px;height:7px;overflow:hidden;}
 .fbar-fill{height:100%;border-radius:3px;opacity:.85;}
-.fbar-val{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--text-3);width:92px;text-align:right;flex-shrink:0;}
+.fbar-val{font-family:'DM Mono',monospace;font-size:11.5px;color:var(--text-3);width:104px;text-align:right;flex-shrink:0;}
+.fbar-delta{font-family:'DM Mono',monospace;font-size:10px;color:var(--danger);width:44px;text-align:right;flex-shrink:0;}
+
+/* AI FRAUD CALLOUT */
+.ai-fraud-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+.af-badge{display:inline-flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;padding:3px 10px;border-radius:4px;background:var(--violet-bg);color:var(--violet);margin-bottom:14px;}
+.af-n{font-family:'Barlow Condensed',sans-serif;font-size:52px;font-weight:800;line-height:1;color:var(--text);letter-spacing:-1px;margin-bottom:6px;}
+.af-l{font-size:13px;color:var(--text-2);line-height:1.5;margin-bottom:12px;}
+.af-src{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);}
+.af-list{display:flex;flex-direction:column;gap:10px;}
+.af-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;}
+.af-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px;background:var(--violet);}
+.af-item-t{font-weight:600;font-size:13px;color:var(--text);margin-bottom:2px;}
+.af-item-p{font-size:12px;color:var(--text-2);line-height:1.5;}
+
 .stat-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
 .stat-detail-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;}
 .sd-t{font-weight:600;font-size:14px;color:var(--text);margin-bottom:18px;}
@@ -299,7 +334,9 @@ footer{padding-block:38px;}
   .vf-note{display:none;}
   .kpi-row{grid-template-columns:repeat(2,1fr);}
   .fbar-label{width:140px;}
-  .stat-detail-grid,.stories-row{grid-template-columns:1fr;}
+  .fbar-delta{display:none;}
+  .stat-detail-grid,.stories-row,.ai-fraud-box{grid-template-columns:1fr;}
+  .gc-bars{height:100px;gap:6px;}
 }
 </style>
 </head>
@@ -382,59 +419,148 @@ footer{padding-block:38px;}
 <!-- GLOBAL FRAUD STATS -->
 <section class="sec">
   <div class="wrap">
-    <div class="sec-ey">Глобальная статистика</div>
-    <h2 class="h2">Мошенничество — индустрия<br>с оборотом $16,6 млрд</h2>
-    <p class="sec-sub">По данным FBI IC3 и FTC за 2024 год. Ежегодный рост потерь — в среднем 22%. Большинство жертв не обращаются в полицию.</p>
+    <div class="sec-ey">Глобальная статистика · 2025</div>
+    <h2 class="h2">Мошенничество выросло до<br>$20,9 млрд — и не останавливается</h2>
+    <p class="sec-sub">По данным FBI IC3 Annual Report 2025 (апрель 2026) и FTC. За пять лет потери выросли в 5 раз — среднегодовой рост +26%. В 2025 году IC3 впервые за 25 лет пробил отметку в 1 млн жалоб.</p>
+
     <div class="kpi-row">
-      <div class="kpi">
-        <div class="kpi-n">$16,6<span>млрд</span></div>
-        <div class="kpi-l">Суммарные потери от мошенничества в 2024</div>
-        <div class="kpi-src">Источник: FBI IC3 Annual Report 2024</div>
+      <div class="kpi" style="border-top:2px solid var(--danger);">
+        <div class="kpi-n">$20,9<span>млрд</span></div>
+        <div class="kpi-l">Суммарные потери от интернет-преступлений в 2025</div>
+        <div class="kpi-delta up">↑ +26% к 2024</div>
+        <div class="kpi-src" style="margin-top:8px;">FBI IC3 Annual Report 2025</div>
       </div>
-      <div class="kpi">
-        <div class="kpi-n">$6,57<span>млрд</span></div>
+      <div class="kpi" style="border-top:2px solid var(--danger);">
+        <div class="kpi-n">$8,6<span>млрд</span></div>
         <div class="kpi-l">Инвестиционное мошенничество — крупнейшая категория</div>
-        <div class="kpi-src">FBI IC3 2024 · Инвест-фрод</div>
+        <div class="kpi-delta up">↑ +31% к 2024</div>
+        <div class="kpi-src" style="margin-top:8px;">FBI IC3 2025 · 73 000 жалоб</div>
       </div>
-      <div class="kpi">
-        <div class="kpi-n">$5,6<span>млрд</span></div>
-        <div class="kpi-l">Потери через криптовалюту — самый быстрый рост</div>
-        <div class="kpi-src">FBI IC3 2024 · Крипто-мошенничество</div>
+      <div class="kpi" style="border-top:2px solid #DB2777;">
+        <div class="kpi-n">$1,16<span>млрд</span></div>
+        <div class="kpi-l">Романтические аферы — рост жалоб +22% г/г</div>
+        <div class="kpi-delta up">↑ +22% к 2024</div>
+        <div class="kpi-src" style="margin-top:8px;">FTC 2025 · 55 604 жалобы</div>
       </div>
-      <div class="kpi">
-        <div class="kpi-n">2,6<span>млн</span></div>
-        <div class="kpi-l">Жалоб на мошенничество подано в FTC за 2024</div>
-        <div class="kpi-src">Источник: FTC Consumer Sentinel 2024</div>
+      <div class="kpi" style="border-top:2px solid var(--violet);">
+        <div class="kpi-n">$893<span>млн</span></div>
+        <div class="kpi-l">ИИ-мошенничество — новая категория в отчёте FBI</div>
+        <div class="kpi-delta new">★ Новая метрика</div>
+        <div class="kpi-src" style="margin-top:8px;">FBI IC3 2025 · рост AI-скамов +1210%</div>
       </div>
     </div>
 
+    <!-- GROWTH CHART -->
+    <div class="growth-chart">
+      <div class="gc-title">Динамика потерь от интернет-мошенничества (FBI IC3)</div>
+      <div class="gc-sub">Совокупные потери жертв по годам, млрд $</div>
+      <div class="gc-bars">
+        <div class="gc-col">
+          <div class="gc-bar-wrap"><div class="gc-bar" style="height:20%;background:var(--border);"></div></div>
+          <div class="gc-val">$4,2</div>
+          <div class="gc-year">2020</div>
+        </div>
+        <div class="gc-col">
+          <div class="gc-bar-wrap"><div class="gc-bar" style="height:33%;background:var(--border);"></div></div>
+          <div class="gc-val">$6,9</div>
+          <div class="gc-year">2021</div>
+        </div>
+        <div class="gc-col">
+          <div class="gc-bar-wrap"><div class="gc-bar" style="height:49%;background:var(--text-3);"></div></div>
+          <div class="gc-val">$10,3</div>
+          <div class="gc-year">2022</div>
+        </div>
+        <div class="gc-col">
+          <div class="gc-bar-wrap"><div class="gc-bar" style="height:60%;background:var(--text-3);"></div></div>
+          <div class="gc-val">$12,5</div>
+          <div class="gc-year">2023</div>
+        </div>
+        <div class="gc-col">
+          <div class="gc-bar-wrap"><div class="gc-bar" style="height:79%;background:var(--text-2);"></div></div>
+          <div class="gc-val">$16,6</div>
+          <div class="gc-year">2024</div>
+        </div>
+        <div class="gc-col">
+          <div class="gc-bar-wrap"><div class="gc-bar cur" style="height:100%;background:var(--accent-br);"></div></div>
+          <div class="gc-val cur">$20,9</div>
+          <div class="gc-year cur">2025</div>
+        </div>
+        <div class="gc-col" style="opacity:.5;">
+          <div class="gc-bar-wrap"><div class="gc-bar" style="height:100%;background:linear-gradient(var(--danger) 0%,transparent 100%);border:1.5px dashed var(--danger);border-radius:4px 4px 0 0;"></div></div>
+          <div class="gc-val" style="color:var(--danger);">~$26B</div>
+          <div class="gc-year" style="color:var(--danger);">2026↗</div>
+        </div>
+      </div>
+      <div class="gc-proj">* 2026 — оценка Deloitte: GenAI-мошенничество вырастет до $40 млрд к 2027 г. | Источник: FBI IC3 2020–2025</div>
+    </div>
+
+    <!-- FRAUD TYPES 2025 vs 2024 -->
     <div class="fraud-types">
-      <div class="fraud-types-t">Топ видов мошенничества по потерям (2024)</div>
+      <div class="fraud-types-t">Топ категорий потерь — 2025 vs 2024 (FBI IC3)</div>
+      <div class="fraud-types-s">Все цифры — задокументированные потери жертв, реальные потери выше в ~10 раз</div>
       <div class="fbar-list">
         <div class="fbar-row">
           <div class="fbar-label">Инвестиционное мошенничество</div>
           <div class="fbar-track"><div class="fbar-fill" style="width:100%;background:var(--danger)"></div></div>
-          <div class="fbar-val">$6,57 млрд</div>
+          <div class="fbar-val">$8,6 млрд</div>
+          <div class="fbar-delta">+31%</div>
         </div>
         <div class="fbar-row">
           <div class="fbar-label">BEC / Корпоративный фрод</div>
-          <div class="fbar-track"><div class="fbar-fill" style="width:44%;background:var(--warn)"></div></div>
-          <div class="fbar-val">$2,9 млрд</div>
+          <div class="fbar-track"><div class="fbar-fill" style="width:35%;background:var(--warn)"></div></div>
+          <div class="fbar-val">$3,0 млрд</div>
+          <div class="fbar-delta">+3%</div>
         </div>
         <div class="fbar-row">
           <div class="fbar-label">Техподдержка / Impostors</div>
-          <div class="fbar-track"><div class="fbar-fill" style="width:20%;background:var(--warn)"></div></div>
-          <div class="fbar-val">$1,3 млрд</div>
+          <div class="fbar-track"><div class="fbar-fill" style="width:24%;background:var(--warn)"></div></div>
+          <div class="fbar-val">$2,1 млрд</div>
+          <div class="fbar-delta">+62%</div>
         </div>
         <div class="fbar-row">
           <div class="fbar-label">Романтические аферы</div>
-          <div class="fbar-track"><div class="fbar-fill" style="width:17%;background:var(--violet)"></div></div>
-          <div class="fbar-val">$1,14 млрд</div>
+          <div class="fbar-track"><div class="fbar-fill" style="width:11%;background:#DB2777"></div></div>
+          <div class="fbar-val">$929 млн</div>
+          <div class="fbar-delta">−19%</div>
         </div>
         <div class="fbar-row">
-          <div class="fbar-label">Фейковые вакансии (Task Scam)</div>
-          <div class="fbar-track"><div class="fbar-fill" style="width:8%;background:#10B981"></div></div>
-          <div class="fbar-val">$518 млн</div>
+          <div class="fbar-label">Имитация госорганов</div>
+          <div class="fbar-track"><div class="fbar-fill" style="width:9%;background:var(--warn)"></div></div>
+          <div class="fbar-val">$800 млн</div>
+          <div class="fbar-delta">—</div>
+        </div>
+        <div class="fbar-row">
+          <div class="fbar-label">ИИ-мошенничество (новая кат.)</div>
+          <div class="fbar-track"><div class="fbar-fill" style="width:10%;background:var(--violet)"></div></div>
+          <div class="fbar-val">$893 млн</div>
+          <div class="fbar-delta" style="color:var(--violet);">NEW</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI FRAUD CALLOUT -->
+    <div class="ai-fraud-box">
+      <div>
+        <div class="af-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Новая угроза 2025–2026
+        </div>
+        <div class="af-n">+1 210%</div>
+        <div class="af-l">Рост AI-мошенничества за 2025 год. FBI IC3 впервые включил ИИ как отдельную категорию — $893 млн задокументированных потерь. Реальная цифра — в разы выше.</div>
+        <div class="af-src">FBI IC3 2025 · Brightside AI 2026 · Deloitte прогноз</div>
+      </div>
+      <div class="af-list">
+        <div class="af-item">
+          <div class="af-dot"></div>
+          <div><div class="af-item-t">Дипфейк-лица в Tinder и Instagram</div><div class="af-item-p">8 млн дипфейков в сети в 2026 г. (×16 за 2 года). Фото нельзя проверить глазом — нужен детектор.</div></div>
+        </div>
+        <div class="af-item">
+          <div class="af-dot"></div>
+          <div><div class="af-item-t">Клонирование голоса в реальном времени</div><div class="af-item-p">Голос «брокера» или «HR» в звонке может быть синтезирован ИИ. Живая очная запись — единственная защита.</div></div>
+        </div>
+        <div class="af-item">
+          <div class="af-dot"></div>
+          <div><div class="af-item-t">Крупнейший дипфейк-скам — $25,6 млн</div><div class="af-item-p">Arup (Великобритания, 2025): сотрудник перевёл $25,6 млн после видеозвонка с «финдиректором» — полностью синтезированным ИИ.</div></div>
         </div>
       </div>
     </div>
@@ -459,10 +585,10 @@ footer{padding-block:38px;}
             <div class="task-bar-val danger">$518 млн</div>
           </div>
         </div>
-        <div class="sd-note">Рост +475% за 2 года · Источник: FTC</div>
+        <div class="sd-note">Рост +475% за 2022–2024 · FTC · данные 2025 ожидаются</div>
       </div>
       <div class="stat-detail-card">
-        <div class="sd-t">Платформы мошенников (доля жалоб)</div>
+        <div class="sd-t">Соцсети как площадка мошенников (FTC 2025)</div>
         <div class="platform-rows">
           <div class="plat-row">
             <div class="plat-name">Facebook</div>
@@ -490,7 +616,7 @@ footer{padding-block:38px;}
             <div class="plat-pct">8%</div>
           </div>
         </div>
-        <div class="sd-note">Источник: FTC Consumer Sentinel 2024</div>
+        <div class="sd-note">30% потерь от мошенничества начинается в соцсетях · $2,1 млрд</div>
       </div>
     </div>
 
@@ -508,10 +634,10 @@ footer{padding-block:38px;}
         <a href="https://www.forbes.ru/forbeslife/454819-zolotaa-zila-kak-mosennik-iz-tinder-obmanul-devusek-na-10-mln" class="story-link" target="_blank" rel="noopener">forbes.ru →</a>
       </div>
       <div class="story-card">
-        <div class="story-tag">Реальный случай · AARP 2024</div>
-        <div class="story-t">Фиктивный брокер в Telegram</div>
-        <p class="story-p">Пенсионер перевёл $310 000 «брокеру» из Telegram. Фото брокера оказалось ИИ-сгенерированным, компания не имела лицензии. Деньги выведены через крипто-кошелёк.</p>
-        <a href="https://www.aarp.org/money/scams-fraud/pig-butchering-scam/" class="story-link" target="_blank" rel="noopener">aarp.org →</a>
+        <div class="story-tag">Реальный случай · 2025 · Дипфейк</div>
+        <div class="story-t">Видеозвонок с «финдиректором» — $25,6 млн</div>
+        <p class="story-p">Сотрудник британской компании Arup перевёл $25,6 млн после видеоконференции, где «финдиректор» и коллеги оказались полностью синтезированными ИИ-аватарами. Один из крупнейших дипфейк-мошенничеств в истории.</p>
+        <a href="https://brside.com/blog/deepfake-fraud-losses-2026" class="story-link" target="_blank" rel="noopener">brside.com →</a>
       </div>
     </div>
   </div>
