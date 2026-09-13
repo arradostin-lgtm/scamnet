@@ -353,13 +353,13 @@ footer{padding-block:38px;}
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Антифрод-верификация</div>
+      <div class="eyebrow">Антифрод-верификация · Весь мир</div>
       <h1 class="h1">Он<br><em>настоящий?</em></h1>
-      <p class="hero-sub">Загрузи фото или голос собеседника. Мы сравним с базой мошенников, определим ИИ-генерацию, проверим голос и репутацию компании.</p>
+      <p class="hero-sub">Загрузи фото или голос собеседника — из любой страны. Scamnet сравнит с базой мошенников, определит ИИ-генерацию, проверит голос и репутацию компании за 30 секунд.</p>
       <div class="hints">
-        <div class="hint"><div class="hint-dot"></div>Данные не сохраняются</div>
+        <div class="hint"><div class="hint-dot"></div>Работает в 190+ странах</div>
         <div class="hint"><div class="hint-dot"></div>Анонимная проверка</div>
-        <div class="hint"><div class="hint-dot"></div>Результат за 30 секунд</div>
+        <div class="hint"><div class="hint-dot"></div>Данные не сохраняются</div>
       </div>
     </div>
     <div>
@@ -419,28 +419,52 @@ footer{padding-block:38px;}
 <!-- GLOBAL FRAUD STATS -->
 <section class="sec">
   <div class="wrap">
-    <div class="sec-ey">Глобальная статистика · 2025–2026</div>
-    <h2 class="h2">Глобальные потери —<br>$442 млрд в год</h2>
-    <p class="sec-sub">По данным Interpol Global Financial Fraud Assessment (март 2026), FBI IC3 Annual Report 2025 и FTC. Мировые потери в 21 раз выше, чем только по США — большинство жертв никогда не сообщают о мошенничестве.</p>
+    <div class="sec-ey">Глобальная статистика · Interpol · FBI · 2025–2026</div>
+    <h2 class="h2">$442 млрд потерь в год —<br>в каждой стране мира</h2>
+    <p class="sec-sub">Мошенничество — глобальная проблема. По данным Interpol (март 2026), потери одних только США составляют лишь 4,7% от мирового масштаба. У каждой страны — своя статистика, у каждой жертвы — один и тот же вопрос.</p>
 
-    <div style="background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--danger);border-radius:14px;padding:24px 28px;margin-top:36px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
-      <div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--danger);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Interpol · Глобально · 2025</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(48px,6vw,72px);font-weight:800;line-height:1;color:var(--text);letter-spacing:-1.5px;">$442 <span style="font-size:clamp(22px,3vw,32px);font-weight:600;color:var(--text-2);">млрд</span></div>
-        <div style="font-size:14px;color:var(--text-2);margin-top:6px;">Глобальные потери от мошенничества — все страны, все схемы</div>
+    <!-- COUNTRY BREAKDOWN -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-top:36px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:28px;">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--danger);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;">Interpol · Глобально · 2025</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(52px,6vw,80px);font-weight:800;line-height:1;color:var(--text);letter-spacing:-2px;">$442 <span style="font-size:clamp(24px,3vw,36px);font-weight:600;color:var(--text-2);">млрд</span></div>
+          <div style="font-size:14px;color:var(--text-2);margin-top:6px;max-width:38ch;">Суммарные потери от мошенничества во всех странах мира</div>
+        </div>
+        <div style="background:var(--bg-2);border-radius:10px;padding:16px 20px;text-align:center;">
+          <div style="font-family:'DM Mono',monospace;font-size:9.5px;color:var(--text-3);letter-spacing:.5px;margin-bottom:6px;">СРЕДНЕГОДОВОЙ РОСТ</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:800;color:var(--danger);line-height:1;">+54%</div>
+          <div style="font-size:11.5px;color:var(--text-3);margin-top:4px;">fraud-уведомлений Interpol</div>
+        </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:10px;min-width:240px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="font-size:13px;color:var(--text-3);width:120px;flex-shrink:0;">США (FBI IC3)</div>
-          <div style="flex:1;background:var(--bg-2);border-radius:3px;height:6px;overflow:hidden;"><div style="height:100%;border-radius:3px;background:var(--accent-br);opacity:.85;width:4.7%;"></div></div>
-          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-3);width:52px;text-align:right;">$20,9B</div>
+
+      <!-- per-country bars -->
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;">Потери по странам · как пример масштаба</div>
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="font-size:13px;color:var(--text);width:200px;flex-shrink:0;display:flex;align-items:center;gap:8px;"><span>🇺🇸</span> США</div>
+          <div style="flex:1;background:var(--bg-2);border-radius:4px;height:10px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:var(--accent-br);width:4.7%;"></div></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--accent-br);width:130px;text-align:right;flex-shrink:0;">$20,9 млрд · 4,7%</div>
         </div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <div style="font-size:13px;color:var(--text-3);width:120px;flex-shrink:0;">Весь мир</div>
-          <div style="flex:1;background:var(--bg-2);border-radius:3px;height:6px;overflow:hidden;"><div style="height:100%;border-radius:3px;background:var(--danger);opacity:.85;width:100%;"></div></div>
-          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--danger);width:52px;text-align:right;">$442B</div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="font-size:13px;color:var(--text);width:200px;flex-shrink:0;display:flex;align-items:center;gap:8px;"><span>🇬🇧</span> Великобритания</div>
+          <div style="flex:1;background:var(--bg-2);border-radius:4px;height:10px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:var(--accent-br);opacity:.7;width:0.36%;"></div></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-3);width:130px;text-align:right;flex-shrink:0;">£1,28 млрд · ~0,4%</div>
         </div>
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);margin-top:2px;">США = лишь 4,7% глобальных потерь · Interpol 2026</div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="font-size:13px;color:var(--text);width:200px;flex-shrink:0;display:flex;align-items:center;gap:8px;"><span>🇦🇺</span> Австралия</div>
+          <div style="flex:1;background:var(--bg-2);border-radius:4px;height:10px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:var(--accent-br);opacity:.7;width:0.32%;"></div></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--text-3);width:130px;text-align:right;flex-shrink:0;">AU$2,18 млрд · ~0,3%</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="font-size:13px;color:var(--text-3);width:200px;flex-shrink:0;display:flex;align-items:center;gap:8px;"><span>🌍</span> Остальной мир</div>
+          <div style="flex:1;background:var(--bg-2);border-radius:4px;height:10px;overflow:hidden;"><div style="height:100%;border-radius:4px;background:var(--danger);opacity:.85;width:94.5%;"></div></div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--danger);width:130px;text-align:right;flex-shrink:0;">~$420 млрд · 94,5%</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-family:'DM Mono',monospace;font-size:10px;color:var(--text-3);line-height:1.7;">
+        Источники: Interpol Global Financial Fraud Assessment (март 2026) · FBI IC3 Annual Report 2025 · UK Finance Annual Fraud Report 2026 · ACCC Scamwatch 2025<br>
+        * Цифры по UK и AU — банковский фрод, не учитывают незарегистрированные случаи. Реальный масштаб — в разы выше.
       </div>
     </div>
 
@@ -667,9 +691,9 @@ footer{padding-block:38px;}
 <!-- AUDIENCE -->
 <section class="sec">
   <div class="wrap">
-    <div class="sec-ey">Кому подходит</div>
+    <div class="sec-ey">Кому подходит · Любая страна</div>
     <h2 class="h2">Три сценария,<br>где проверка решает всё</h2>
-    <p class="sec-sub">Один вопрос стоит 30 секунд проверки — и тысячи потерянных рублей или нервов.</p>
+    <p class="sec-sub">Неважно, в какой стране вы живёте — схемы мошенников одинаковы везде. Один вопрос стоит 30 секунд проверки.</p>
     <div class="audience-grid">
       <div class="aud-card" style="border-top:2px solid #DB2777;">
         <div class="aud-icon pink">
@@ -936,7 +960,7 @@ footer{padding-block:38px;}
   <div class="wrap cta-in">
     <div>
       <h2 class="h2">Пострадал от мошенника?</h2>
-      <p class="sec-sub">Добавь его в базу — защити других. Модерация занимает до 24 часов.</p>
+      <p class="sec-sub">Добавь его в базу — защити пользователей из любой страны. Модерация занимает до 24 часов.</p>
     </div>
     <a href="#" class="btn-out">Сообщить о мошеннике →</a>
   </div>
@@ -944,7 +968,7 @@ footer{padding-block:38px;}
 
 <footer>
   <div class="wrap foot-in">
-    <div class="foot-note">© 2026 Scamnet · Защита от мошенников</div>
+    <div class="foot-note">© 2026 Scamnet · Антифрод-верификация · 190+ стран</div>
     <div class="foot-links">
       <a href="#">Конфиденциальность</a>
       <a href="#">Контакты</a>
