@@ -2260,6 +2260,26 @@ function showResult(data, photoUrl) {
     _intelCard('dos-breaches', null, null);
   }
 
+  // Emailrep
+  const er = data.emailrep;
+  if (er) {
+    const repColor = er.reputation === 'high' ? '' : (er.reputation === 'low' || er.suspicious ? ' dos-intel-danger' : ' dos-intel-warn');
+    const repLabel = {'high':'✅ Надёжный','medium':'⚠ Средний','low':'🚨 Низкий','none':'❓ Неизвестный'}[er.reputation] || er.reputation;
+    let erRows = `<div class="dos-intel-row${repColor}">
+      <span class="dos-intel-label">Репутация</span><span class="dos-intel-val">${repLabel}</span>
+    </div>`;
+    if (er.suspicious) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">⚠ Подозрительный</span><span class="dos-intel-val">Email помечен как подозрительный</span></div>`;
+    if (er.blacklisted) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">🚫 Чёрный список</span><span class="dos-intel-val">Занесён в блок-листы</span></div>`;
+    if (er.malicious_activity) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">☠ Вредоносная активность</span><span class="dos-intel-val">${er.malicious_activity_recent ? 'Недавно' : 'Зафиксирована'}</span></div>`;
+    if (er.spam) erRows += `<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">📩 Спам</span><span class="dos-intel-val">Источник спама</span></div>`;
+    if (er.disposable) erRows += `<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">🗑 Временный</span><span class="dos-intel-val">Одноразовый адрес</span></div>`;
+    if (er.days_since_domain_creation != null) erRows += `<div class="dos-intel-row"><span class="dos-intel-label">Возраст домена</span><span class="dos-intel-val">${er.days_since_domain_creation} дней</span></div>`;
+    if (er.references != null) erRows += `<div class="dos-intel-row"><span class="dos-intel-label">Упоминаний</span><span class="dos-intel-val">${er.references}</span></div>`;
+    _intelCard('dos-emailrep', '🔍 РЕПУТАЦИЯ EMAIL', erRows);
+  } else {
+    _intelCard('dos-emailrep', null, null);
+  }
+
   // EXIF risk signals
   const exif = data.exif || {};
   const exifSignals = exif.risk_signals || [];
