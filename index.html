@@ -657,8 +657,9 @@ footer{padding-block:38px;}
   <div class="wrap nav-in">
     <a href="#" class="logo"><div class="logo-pulse"></div>SCAMNET</a>
     <div class="nav-actions" id="nav-actions">
-      <button class="nav-btn" type="button" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">Войти</button>
-      <button class="nav-btn-primary" type="button" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">Регистрация</button>
+      <button id="lang-switcher" class="nav-btn" type="button" onclick="applyLang(_lang==='ru'?'en':'ru')" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;min-width:36px;">EN</button>
+      <button class="nav-btn" data-i18n="nav.login" type="button" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">Войти</button>
+      <button class="nav-btn-primary" data-i18n="nav.register" type="button" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">Регистрация</button>
     </div>
   </div>
 </nav>
@@ -676,11 +677,11 @@ footer{padding-block:38px;}
   </div>
   <button onclick="openSettings()" style="width:100%;text-align:left;padding:9px 12px;border-radius:8px;border:none;background:none;cursor:pointer;font-size:14px;color:var(--text-2);font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='var(--bg-2)'" onmouseout="this.style.background='none'">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-    Настройки профиля
+    <span data-i18n="nav.settings">Настройки профиля</span>
   </button>
   <button onclick="clearToken();location.reload();" style="width:100%;text-align:left;padding:9px 12px;border-radius:8px;border:none;background:none;cursor:pointer;font-size:14px;color:#cc1c1c;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:8px;" onmouseover="this.style.background='#fdeaea'" onmouseout="this.style.background='none'">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-    Выйти
+    <span data-i18n="nav.logout">Выйти</span>
   </button>
 </div>
 
@@ -688,7 +689,7 @@ footer{padding-block:38px;}
 <div id="settings-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;">
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0;max-width:500px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.18);overflow:hidden;">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--border);">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);">Настройки профиля</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);" data-i18n="nav.settings">Настройки профиля</div>
       <button onclick="document.getElementById('settings-modal').style.display='none'" style="background:none;border:none;cursor:pointer;color:var(--text-3);font-size:22px;line-height:1;">×</button>
     </div>
     <div style="padding:28px;">
@@ -702,7 +703,7 @@ footer{padding-block:38px;}
       <!-- Тарифный план — будет заполнен позже -->
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;color:var(--text-3);font-size:14px;">
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 10px;display:block;opacity:.4;"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
-        Информация о тарифе появится здесь
+        <span data-i18n="settings_modal.plan_placeholder">Информация о тарифе появится здесь</span>
       </div>
     </div>
   </div>
@@ -712,13 +713,13 @@ footer{padding-block:38px;}
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Антифрод-верификация · Весь мир</div>
-      <h1 class="h1">Он<br><em>настоящий?</em></h1>
-      <p class="hero-sub">Загрузи фото или голос собеседника — из любой страны. Scamnet сравнит с базой мошенников, определит ИИ-генерацию, проверит голос и репутацию компании за 30 секунд.</p>
+      <div class="eyebrow" data-i18n="hero.eyebrow">Антифрод-верификация · Весь мир</div>
+      <h1 class="h1" data-i18n="hero.h1">Он<br><em>настоящий?</em></h1>
+      <p class="hero-sub" data-i18n="hero.sub">Загрузи фото или голос собеседника — из любой страны. Scamnet сравнит с базой мошенников, определит ИИ-генерацию, проверит голос и репутацию компании за 30 секунд.</p>
       <div class="hints">
-        <div class="hint"><div class="hint-dot"></div>Работает в 190+ странах</div>
-        <div class="hint"><div class="hint-dot"></div>Анонимная проверка</div>
-        <div class="hint"><div class="hint-dot"></div>Данные не сохраняются</div>
+        <div class="hint"><div class="hint-dot"></div><span data-i18n="hero.hint1">Работает в 190+ странах</span></div>
+        <div class="hint"><div class="hint-dot"></div><span data-i18n="hero.hint2">Анонимная проверка</span></div>
+        <div class="hint"><div class="hint-dot"></div><span data-i18n="hero.hint3">Данные не сохраняются</span></div>
       </div>
     </div>
     <div>
@@ -726,39 +727,39 @@ footer{padding-block:38px;}
         <div class="utabs">
           <button class="utab active" data-tab="photo" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            Фото
+            <span data-i18n="upload.photo_tab">Фото</span>
           </button>
           <button class="utab" data-tab="voice" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 013 3v7a3 3 0 01-6 0V5a3 3 0 013-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
-            Голос
+            <span data-i18n="upload.voice_tab">Голос</span>
           </button>
         </div>
         <div class="upload" id="zone-photo">
           <div class="scan-line"></div>
           <div class="u-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7" stroke-linejoin="round"/></svg></div>
-          <div class="u-label">Загрузи фото собеседника</div>
-          <div class="u-sub">JPG, PNG, WEBP — до 10 МБ</div>
+          <div class="u-label" data-i18n="upload.photo_label">Загрузи фото собеседника</div>
+          <div class="u-sub" data-i18n="upload.photo_sub">JPG, PNG, WEBP — до 10 МБ</div>
           <button class="btn" type="button" id="btn-pick-photo">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            Выбрать фото
+            <span data-i18n="upload.photo_btn">Выбрать фото</span>
           </button>
           <input type="file" id="file-input-photo" accept="image/*" style="display:none">
-          <div class="u-note">или перетащи сюда</div>
+          <div class="u-note" data-i18n="upload.photo_drag">или перетащи сюда</div>
         </div>
         <div id="ctx-wrap" style="padding:0 4px 8px">
           <div class="ctx-fields" id="ctx-fields">
             <div class="ctx-field full">
-              <label for="ctx-name">Как представился <span class="req">*</span></label>
-              <input type="text" id="ctx-name" placeholder="Имя или псевдоним">
+              <label for="ctx-name"><span data-i18n="form.name_label">Как представился</span> <span class="req">*</span></label>
+              <input type="text" id="ctx-name" data-i18n-ph="form.name_ph" placeholder="Имя или псевдоним">
             </div>
             <div class="ctx-field">
-              <label for="ctx-country">Страна знакомства <span class="req">*</span></label>
-              <input type="text" id="ctx-country" placeholder="Например: Россия">
+              <label for="ctx-country"><span data-i18n="form.country_label">Страна знакомства</span> <span class="req">*</span></label>
+              <input type="text" id="ctx-country" data-i18n-ph="form.country_ph" placeholder="Например: Россия">
             </div>
             <div class="ctx-field">
-              <label for="ctx-platform">Сайт знакомства <span class="req">*</span></label>
+              <label for="ctx-platform"><span data-i18n="form.platform_label">Сайт знакомства</span> <span class="req">*</span></label>
               <select id="ctx-platform">
-                <option value="">— выбери —</option>
+                <option value="" data-i18n="form.platform_ph">— выбери —</option>
                 <option>Tinder</option>
                 <option>Bumble</option>
                 <option>Instagram</option>
@@ -767,31 +768,31 @@ footer{padding-block:38px;}
                 <option>Facebook</option>
                 <option>VK</option>
                 <option>LinkedIn</option>
-                <option>Знакомство вживую</option>
-                <option>Другое</option>
+                <option data-i18n="form.met_live">Знакомство вживую</option>
+                <option data-i18n="form.met_other">Другое</option>
               </select>
             </div>
             <div class="ctx-field">
-              <label for="ctx-username">Ник / username</label>
-              <input type="text" id="ctx-username" placeholder="@handle (необязательно)">
+              <label for="ctx-username" data-i18n="form.username_label">Ник / username</label>
+              <input type="text" id="ctx-username" data-i18n-ph="form.username_ph" placeholder="@handle (необязательно)">
             </div>
             <div class="ctx-field">
-              <label for="ctx-company">Компания</label>
-              <input type="text" id="ctx-company" placeholder="Где работает (необязательно)">
+              <label for="ctx-company" data-i18n="form.company_label">Компания</label>
+              <input type="text" id="ctx-company" data-i18n-ph="form.company_ph" placeholder="Где работает (необязательно)">
             </div>
             <div class="ctx-field">
-              <label for="ctx-phone">Телефон</label>
-              <input type="tel" id="ctx-phone" placeholder="+7 999 123 45 67 (необязательно)">
+              <label for="ctx-phone" data-i18n="form.phone_label">Телефон</label>
+              <input type="tel" id="ctx-phone" data-i18n-ph="form.phone_ph" placeholder="+7 999 123 45 67 (необязательно)">
             </div>
             <div class="ctx-field">
               <label for="ctx-email">Email</label>
-              <input type="email" id="ctx-email" placeholder="email мошенника (необязательно)">
+              <input type="email" id="ctx-email" data-i18n-ph="form.email_ph" placeholder="email мошенника (необязательно)">
             </div>
-            <div class="ctx-hint">* Поля обязательны для запуска поиска</div>
+            <div class="ctx-hint" data-i18n="form.required_note">* Поля обязательны для запуска поиска</div>
           </div>
         </div>
         <div id="history-wrap" class="history-wrap" style="display:none">
-          <div class="history-title">История проверок</div>
+          <div class="history-title" data-i18n="history.title">История проверок</div>
           <div id="history-list" class="history-list"></div>
         </div>
         <div class="upload hidden" id="zone-voice">
@@ -800,15 +801,15 @@ footer{padding-block:38px;}
             <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
             <div class="wave-bar"></div>
           </div>
-          <div class="u-label">Загрузи запись голоса</div>
-          <div class="u-sub">MP3, WAV, OGG, M4A — от 10 секунд</div>
+          <div class="u-label" data-i18n="upload.voice_label">Загрузи запись голоса</div>
+          <div class="u-sub" data-i18n="upload.voice_sub">MP3, WAV, OGG, M4A — от 10 секунд</div>
           <button class="btn" type="button">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            Выбрать запись
+            <span data-i18n="upload.voice_btn">Выбрать запись</span>
           </button>
           <div class="voice-note">
             <svg class="voice-note-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span><strong>Рекомендуется запись живого очного общения</strong> — не менее 10 секунд.</span>
+            <span data-i18n="upload.voice_note"><strong>Рекомендуется запись живого очного общения</strong> — не менее 10 секунд.</span>
           </div>
         </div>
       </div>
@@ -819,9 +820,9 @@ footer{padding-block:38px;}
 <!-- STATS BAR -->
 <div class="stats">
   <div class="wrap stats-row">
-    <div class="stat"><div class="stat-n">18 742</div><div class="stat-l">проверок выполнено</div></div>
-    <div class="stat"><div class="stat-n">1 204</div><div class="stat-l">мошенников в базе</div></div>
-    <div class="stat"><div class="stat-n">9 300</div><div class="stat-l">человек защищено</div></div>
+    <div class="stat"><div class="stat-n">18 742</div><div class="stat-l" data-i18n="stats.checks">проверок выполнено</div></div>
+    <div class="stat"><div class="stat-n">1 204</div><div class="stat-l" data-i18n="stats.profiles">мошенников в базе</div></div>
+    <div class="stat"><div class="stat-n">9 300</div><div class="stat-l" data-i18n="stats.users">человек защищено</div></div>
   </div>
 </div>
 
@@ -829,9 +830,9 @@ footer{padding-block:38px;}
 <div class="tab-nav-wrap">
   <div class="wrap">
     <div class="main-tabs" role="tablist">
-      <button class="main-tab active" role="tab" onclick="switchMainTab(this,'service')">О сервисе</button>
-      <button class="main-tab" role="tab" onclick="switchMainTab(this,'result')">Результат для подписчиков</button>
-      <button class="main-tab" role="tab" onclick="switchMainTab(this,'stats')">Статистика мошенничества</button>
+      <button class="main-tab active" role="tab" onclick="switchMainTab(this,'service')" data-i18n="tabs.service">О сервисе</button>
+      <button class="main-tab" role="tab" onclick="switchMainTab(this,'result')" data-i18n="tabs.result">Результат для подписчиков</button>
+      <button class="main-tab" role="tab" onclick="switchMainTab(this,'stats')" data-i18n="tabs.stats">Статистика мошенничества</button>
     </div>
   </div>
 </div>
@@ -1576,7 +1577,7 @@ footer{padding-block:38px;}
 <div id="result-modal" class="dos-modal-overlay" onclick="if(event.target===this)closeDossier()">
   <div class="dos-card">
     <div class="dos-header">
-      <div class="dos-eyebrow">SCAMNET · АНАЛИЗ</div>
+      <div class="dos-eyebrow" data-i18n="modal.eyebrow">SCAMNET · АНАЛИЗ</div>
       <div id="dos-verdict" class="dos-verdict-badge dos-v-clean">ЧИСТО</div>
       <button class="dos-close" onclick="closeDossier()">×</button>
     </div>
@@ -1612,29 +1613,29 @@ footer{padding-block:38px;}
         <div id="dos-meta" class="dos-meta-line"></div>
         <div id="dos-id-grid" class="dos-id-grid" style="display:none">
           <div>
-            <div class="dos-id-key">НАСТОЯЩЕЕ ИМЯ</div>
+            <div class="dos-id-key" data-i18n="modal.real_name">НАСТОЯЩЕЕ ИМЯ</div>
             <div class="dos-id-val" id="dos-real-name">—</div>
           </div>
           <div>
-            <div class="dos-id-key">СТАТУС</div>
+            <div class="dos-id-key" data-i18n="modal.status">СТАТУС</div>
             <div class="dos-id-val" id="dos-id-status">—</div>
           </div>
           <div>
-            <div class="dos-id-key">ГРАЖДАНСТВО</div>
+            <div class="dos-id-key" data-i18n="modal.nationality">ГРАЖДАНСТВО</div>
             <div class="dos-id-val" id="dos-id-nationality">—</div>
           </div>
           <div>
-            <div class="dos-id-key">ДАТА ПРИГОВОРА</div>
+            <div class="dos-id-key" data-i18n="modal.verdict_date">ДАТА ПРИГОВОРА</div>
             <div class="dos-id-val mono" id="dos-id-verdict-date">—</div>
           </div>
         </div>
         <div id="dos-kpi-row" class="dos-kpi-row"></div>
         <div id="dos-aliases-wrap" style="display:none">
-          <div class="dos-section-label">ПСЕВДОНИМЫ</div>
+          <div class="dos-section-label" data-i18n="modal.aliases">ПСЕВДОНИМЫ</div>
           <div id="dos-aliases" class="dos-chips"></div>
         </div>
         <div id="dos-platforms-wrap" style="display:none">
-          <div class="dos-section-label">ПЛАТФОРМЫ</div>
+          <div class="dos-section-label" data-i18n="modal.platforms">ПЛАТФОРМЫ</div>
           <div id="dos-platforms" class="dos-chips"></div>
         </div>
       </div>
@@ -1644,11 +1645,11 @@ footer{padding-block:38px;}
       <div class="dos-record-charge" id="dos-charge-text"></div>
       <div class="dos-record-rows">
         <div class="dos-record-row">
-          <span class="dos-record-key">Приговор</span>
+          <span class="dos-record-key" data-i18n="modal.sentence">Приговор</span>
           <span class="dos-record-val" id="dos-sentence-text">—</span>
         </div>
         <div class="dos-record-row">
-          <span class="dos-record-key">Дата</span>
+          <span class="dos-record-key" data-i18n="modal.date">Дата</span>
           <span class="dos-record-val" id="dos-verdict-date-text">—</span>
         </div>
       </div>
@@ -1658,16 +1659,16 @@ footer{padding-block:38px;}
 
     <div id="dos-osint-wrap" class="dos-osint" style="display:none">
       <div class="dos-osint-head">
-        <span class="dos-osint-label">OSINT · ОТКРЫТЫЕ ИСТОЧНИКИ</span>
+        <span class="dos-osint-label" data-i18n="modal.osint_label">OSINT · ОТКРЫТЫЕ ИСТОЧНИКИ</span>
         <span class="dos-osint-badge" id="dos-osint-count">0 НАЙДЕНО</span>
       </div>
       <div class="dos-osint-cols">
         <div class="dos-osint-group">
-          <div class="dos-osint-group-t">ПРОФИЛИ В СОЦ. СЕТЯХ</div>
+          <div class="dos-osint-group-t" data-i18n="modal.social_profiles">ПРОФИЛИ В СОЦ. СЕТЯХ</div>
           <div id="dos-osint-social"></div>
         </div>
         <div class="dos-osint-group">
-          <div class="dos-osint-group-t">УПОМИНАНИЯ НА ФОРУМАХ</div>
+          <div class="dos-osint-group-t" data-i18n="modal.forum_mentions">УПОМИНАНИЯ НА ФОРУМАХ</div>
           <div id="dos-osint-mentions"></div>
         </div>
       </div>
@@ -1676,15 +1677,15 @@ footer{padding-block:38px;}
     <div class="dos-divider"></div>
 
     <div class="dos-analysis">
-      <div class="dos-section-label">РЕЗУЛЬТАТЫ АНАЛИЗА</div>
+      <div class="dos-section-label" data-i18n="modal.analysis">РЕЗУЛЬТАТЫ АНАЛИЗА</div>
       <div id="dos-analysis-rows" class="dos-analysis-rows"></div>
     </div>
 
     <div id="dos-complaint-bar" class="dos-complaint-bar" style="display:none"></div>
 
     <div class="dos-footer">
-      <button class="dos-btn-report" onclick="closeDossier();openReportModal()">Сообщить о мошеннике</button>
-      <button class="dos-btn-close2" onclick="closeDossier()">Закрыть</button>
+      <button class="dos-btn-report" data-i18n="modal.report_btn" onclick="closeDossier();openReportModal()">Сообщить о мошеннике</button>
+      <button class="dos-btn-close2" data-i18n="modal.close_btn" onclick="closeDossier()">Закрыть</button>
     </div>
   </div>
 </div>
@@ -1693,11 +1694,236 @@ footer{padding-block:38px;}
 <div id="checking-overlay" style="display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
   <div style="text-align:center;color:#fff;">
     <div style="width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px;"></div>
-    <div style="font-size:16px;font-weight:500;">Проверяем...</div>
+    <div style="font-size:16px;font-weight:500;" data-i18n="modal.checking">Проверяем...</div>
   </div>
 </div>
 
 <script>
+// ── i18n ─────────────────────────────────────────────────────────────────────
+const LANG = {
+  en: {
+    nav: { login:'Log In', register:'Sign Up', settings:'Settings', logout:'Sign Out' },
+    hero: {
+      eyebrow:'Anti-fraud verification · Worldwide',
+      h1:'Is he<br><em>real?</em>',
+      sub:'Upload a photo or voice recording of your contact — from any country. Scamnet checks against scammer databases, detects AI generation, verifies voice and company reputation in 30 seconds.',
+      hint1:'Works in 190+ countries', hint2:'Anonymous check', hint3:'No data stored',
+    },
+    upload: {
+      photo_tab:'Photo', voice_tab:'Voice',
+      photo_label:'Upload a photo of your contact', photo_sub:'JPG, PNG, WEBP — up to 10 MB',
+      photo_btn:'Choose photo', photo_drag:'or drag and drop here',
+      voice_label:'Upload a voice recording', voice_sub:'MP3, WAV, OGG, M4A — at least 10 seconds',
+      voice_btn:'Choose recording',
+      voice_note:'<strong>Live in-person recording recommended</strong> — at least 10 seconds.',
+    },
+    form: {
+      name_label:'Name they gave you', name_ph:'Name or alias',
+      country_label:'Country you met', country_ph:'e.g. United States',
+      platform_label:'Dating site / app', platform_ph:'— choose —',
+      met_live:'Met in person', met_other:'Other',
+      username_label:'Username / handle', username_ph:'@handle (optional)',
+      company_label:'Company', company_ph:'Where they work (optional)',
+      phone_label:'Phone', phone_ph:'+1 999 123 4567 (optional)',
+      email_ph:'scammer email (optional)',
+      required_note:'* Required fields to start the search',
+    },
+    history: { title:'Check history' },
+    stats: { checks:'checks performed', profiles:'scammers in database', users:'people protected' },
+    tabs: { service:'About', result:'Subscriber results', stats:'Fraud statistics' },
+    modal: {
+      eyebrow:'SCAMNET · ANALYSIS',
+      real_name:'REAL NAME', status:'STATUS', nationality:'NATIONALITY', verdict_date:'VERDICT DATE',
+      aliases:'ALIASES', platforms:'PLATFORMS', sentence:'Sentence', date:'Date',
+      osint_label:'OSINT · OPEN SOURCES', social_profiles:'SOCIAL PROFILES', forum_mentions:'FORUM MENTIONS',
+      analysis:'ANALYSIS RESULTS', report_btn:'Report a scammer', close_btn:'Close', checking:'Checking...',
+    },
+    verdict: { clean:'CLEAN', warning:'CAUTION', high:'HIGH RISK', confirmed:'SCAMMER' },
+    analysis: {
+      ai_true:'<b>AI-generated photo</b> — confidence {pct}%',
+      ai_false:'<b>Photo is real</b> — no generation signs found',
+      match_true:'<b>Found in scammer database</b> — match {pct}%',
+      match_reported:' (victim report)', match_verified:' (verified)',
+      match_false:'<b>Not found in database</b> — not in scammer database',
+      crowdsource:'<b>Crowdsource:</b> this photo was checked {n} times independently',
+      reports:'<b>Reports:</b> complaints have been filed for this person',
+    },
+    status: { at_large:'at large', convicted:'convicted', released:'released', under_investigation:'under investigation' },
+    osint: {
+      found:'{n} FOUND', search_done:'SEARCH COMPLETE',
+      social_empty:'No profiles found automatically', mentions_empty:'No mentions found',
+      manual_search:'MANUAL IMAGE SEARCH',
+    },
+    intel: {
+      sanctions:'🚫 SANCTIONS LIST', phone:'📞 PHONE',
+      telegram:'✈️ TELEGRAM CONFIRMED', breaches:'📧 EMAIL BREACHES ({n})',
+      emailrep:'🔍 EMAIL REPUTATION', exif:'📷 EXIF METADATA',
+    },
+    phone_row: { number:'Number', line_type:'Line type', carrier:'Carrier', country:'Country' },
+    tg_row: { name:'Telegram name' },
+    emailrep_row: {
+      reputation:'Reputation',
+      rep_high:'✅ Good', rep_medium:'⚠ Medium', rep_low:'🚨 Low', rep_none:'❓ Unknown',
+      suspicious:'⚠ Suspicious', suspicious_val:'Flagged as suspicious',
+      blacklisted:'🚫 Blacklisted', blacklisted_val:'In blocklists',
+      malicious:'☠ Malicious activity', malicious_recent:'Recent', malicious_val:'Recorded',
+      spam:'📩 Spam', spam_val:'Spam source',
+      disposable:'🗑 Disposable', disposable_val:'Throwaway address',
+      domain_age:'Domain age', domain_age_val:'{n} days', references:'References',
+    },
+    exif_signals: {
+      no_exif:'No EXIF — possibly AI or screenshot', no_camera:'No camera data in EXIF',
+      no_date:'No capture date in EXIF', exif_read_error:'Could not read EXIF',
+    },
+    phone_signals: {
+      phone_voip:'VoIP number — often used by scammers',
+      phone_tollfree:'Toll-free number (800/888)', phone_premium:'Premium rate number',
+    },
+    exif_row: { camera:'Camera', software:'Software', date_taken:'Date taken' },
+    meta: { born:'b.', platform:'platform:', met:'met on:' },
+    tags: { court:'COURT', confirmed:'CONFIRMED', wanted:'WANTED', victim:'VICTIM', crowdsource:'CROWDSOURCE', forums:'FORUMS' },
+    kpi: { victims:'victims', damage:'damage', reports:'reports', checks:'checks' },
+    complaint:'This person has <strong style="margin-inline:4px">{n}</strong> complaint(s) and report(s) on file',
+    settings_modal: { plan_placeholder:'Subscription information will appear here' },
+    history_labels: { clean:'Clean', warning:'Caution', high:'High Risk', confirmed:'Scammer', unknown:'Unknown' },
+    user_card: { checks_label:'Checks this month', settings_btn:'Settings', logout_btn:'Sign Out' },
+    errors: {
+      upload_no_photo:'Please upload a scammer photo', upload_no_type:'Select a scam type',
+      check_error:'Verification error. Please try again.',
+      connect_error:'Could not connect to server. Please try later.',
+      submit_no_photo:'Photo required',
+    },
+    report: { submitting:'Submitting…', submit_btn:'Submit to database' },
+    pd_name_default:'User',
+  },
+  ru: {
+    nav: { login:'Войти', register:'Регистрация', settings:'Настройки профиля', logout:'Выйти' },
+    hero: {
+      eyebrow:'Антифрод-верификация · Весь мир',
+      h1:'Он<br><em>настоящий?</em>',
+      sub:'Загрузи фото или голос собеседника — из любой страны. Scamnet сравнит с базой мошенников, определит ИИ-генерацию, проверит голос и репутацию компании за 30 секунд.',
+      hint1:'Работает в 190+ странах', hint2:'Анонимная проверка', hint3:'Данные не сохраняются',
+    },
+    upload: {
+      photo_tab:'Фото', voice_tab:'Голос',
+      photo_label:'Загрузи фото собеседника', photo_sub:'JPG, PNG, WEBP — до 10 МБ',
+      photo_btn:'Выбрать фото', photo_drag:'или перетащи сюда',
+      voice_label:'Загрузи запись голоса', voice_sub:'MP3, WAV, OGG, M4A — от 10 секунд',
+      voice_btn:'Выбрать запись',
+      voice_note:'<strong>Рекомендуется запись живого очного общения</strong> — не менее 10 секунд.',
+    },
+    form: {
+      name_label:'Как представился', name_ph:'Имя или псевдоним',
+      country_label:'Страна знакомства', country_ph:'Например: Россия',
+      platform_label:'Сайт знакомства', platform_ph:'— выбери —',
+      met_live:'Знакомство вживую', met_other:'Другое',
+      username_label:'Ник / username', username_ph:'@handle (необязательно)',
+      company_label:'Компания', company_ph:'Где работает (необязательно)',
+      phone_label:'Телефон', phone_ph:'+7 999 123 45 67 (необязательно)',
+      email_ph:'email мошенника (необязательно)',
+      required_note:'* Поля обязательны для запуска поиска',
+    },
+    history: { title:'История проверок' },
+    stats: { checks:'проверок выполнено', profiles:'мошенников в базе', users:'человек защищено' },
+    tabs: { service:'О сервисе', result:'Результат для подписчиков', stats:'Статистика мошенничества' },
+    modal: {
+      eyebrow:'SCAMNET · АНАЛИЗ',
+      real_name:'НАСТОЯЩЕЕ ИМЯ', status:'СТАТУС', nationality:'ГРАЖДАНСТВО', verdict_date:'ДАТА ПРИГОВОРА',
+      aliases:'ПСЕВДОНИМЫ', platforms:'ПЛАТФОРМЫ', sentence:'Приговор', date:'Дата',
+      osint_label:'OSINT · ОТКРЫТЫЕ ИСТОЧНИКИ', social_profiles:'ПРОФИЛИ В СОЦ. СЕТЯХ', forum_mentions:'УПОМИНАНИЯ НА ФОРУМАХ',
+      analysis:'РЕЗУЛЬТАТЫ АНАЛИЗА', report_btn:'Сообщить о мошеннике', close_btn:'Закрыть', checking:'Проверяем...',
+    },
+    verdict: { clean:'ЧИСТО', warning:'ОСТОРОЖНО', high:'ВЫСОКИЙ РИСК', confirmed:'МОШЕННИК' },
+    analysis: {
+      ai_true:'<b>ИИ-сгенерированное фото</b> — уверенность {pct}%',
+      ai_false:'<b>Фото настоящее</b> — признаков генерации не найдено',
+      match_true:'<b>Найден в базе мошенников</b> — совпадение {pct}%',
+      match_reported:' (жалоба жертвы)', match_verified:' (верифицировано)',
+      match_false:'<b>В базе не найден</b> — в базе мошенников отсутствует',
+      crowdsource:'<b>Краудсорсинг:</b> это фото проверяли {n} раз независимо',
+      reports:'<b>Жалобы:</b> поступали обращения по данному лицу',
+    },
+    status: { at_large:'в розыске', convicted:'осуждён', released:'освобождён', under_investigation:'под следствием' },
+    osint: {
+      found:'{n} НАЙДЕНО', search_done:'ПОИСК ЗАВЕРШЁН',
+      social_empty:'Профили не найдены автоматически', mentions_empty:'Упоминаний не найдено',
+      manual_search:'ПОИСК ПО ФОТО ВРУЧНУЮ',
+    },
+    intel: {
+      sanctions:'🚫 САНКЦИОННЫЕ СПИСКИ', phone:'📞 ТЕЛЕФОН',
+      telegram:'✈️ TELEGRAM ПОДТВЕРЖДЁН', breaches:'📧 УТЕЧКИ EMAIL ({n})',
+      emailrep:'🔍 РЕПУТАЦИЯ EMAIL', exif:'📷 EXIF МЕТАДАННЫЕ',
+    },
+    phone_row: { number:'Номер', line_type:'Тип линии', carrier:'Оператор', country:'Страна' },
+    tg_row: { name:'Имя в Telegram' },
+    emailrep_row: {
+      reputation:'Репутация',
+      rep_high:'✅ Надёжный', rep_medium:'⚠ Средний', rep_low:'🚨 Низкий', rep_none:'❓ Неизвестный',
+      suspicious:'⚠ Подозрительный', suspicious_val:'Email помечен как подозрительный',
+      blacklisted:'🚫 Чёрный список', blacklisted_val:'Занесён в блок-листы',
+      malicious:'☠ Вредоносная активность', malicious_recent:'Недавно', malicious_val:'Зафиксирована',
+      spam:'📩 Спам', spam_val:'Источник спама',
+      disposable:'🗑 Временный', disposable_val:'Одноразовый адрес',
+      domain_age:'Возраст домена', domain_age_val:'{n} дней', references:'Упоминаний',
+    },
+    exif_signals: {
+      no_exif:'Нет EXIF — возможно AI или скриншот', no_camera:'Нет данных о камере в EXIF',
+      no_date:'Нет даты съёмки в EXIF', exif_read_error:'Не удалось прочитать EXIF',
+    },
+    phone_signals: {
+      phone_voip:'VoIP номер — часто используется мошенниками',
+      phone_tollfree:'Бесплатный номер (800/888)', phone_premium:'Премиум-тариф',
+    },
+    exif_row: { camera:'Камера', software:'ПО', date_taken:'Дата съёмки' },
+    meta: { born:'д.р.', platform:'платформа:', met:'познакомились:' },
+    tags: { court:'СУД', confirmed:'ПОДТВЕРЖДЕНО', wanted:'В РОЗЫСКЕ', victim:'ЖЕРТВА', crowdsource:'КРАУДСОРС', forums:'ФОРУМЫ' },
+    kpi: { victims:'жертв', damage:'ущерб', reports:'жалоб', checks:'проверок' },
+    complaint:'По данному лицу зафиксировано <strong style="margin-inline:4px">{n}</strong> жалоб(ы) и обращений',
+    settings_modal: { plan_placeholder:'Информация о тарифе появится здесь' },
+    history_labels: { clean:'Чисто', warning:'Осторожно', high:'Высокий риск', confirmed:'Мошенник', unknown:'Неизвестно' },
+    user_card: { checks_label:'Проверок в этом месяце', settings_btn:'Настройки', logout_btn:'Выйти' },
+    errors: {
+      upload_no_photo:'Пожалуйста, загрузите фото мошенника', upload_no_type:'Выберите тип мошенничества',
+      check_error:'Ошибка при проверке. Попробуйте ещё раз.',
+      connect_error:'Не удалось подключиться к серверу. Попробуйте позже.',
+      submit_no_photo:'Нужно фото',
+    },
+    report: { submitting:'Отправляем…', submit_btn:'Отправить в базу' },
+    pd_name_default:'Пользователь',
+  }
+};
+
+let _lang = 'ru';
+
+function t(key) {
+  const parts = key.split('.');
+  let node = LANG[_lang] || LANG.ru;
+  for (const p of parts) { if (node == null) return key; node = node[p]; }
+  return node ?? key;
+}
+
+function applyLang(lang) {
+  _lang = lang;
+  try { localStorage.setItem('sn_lang', lang); } catch(e) {}
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const val = t(el.dataset.i18n);
+    el.innerHTML = val;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    el.placeholder = t(el.dataset.i18nPh);
+  });
+  const sw = document.getElementById('lang-switcher');
+  if (sw) sw.textContent = lang === 'ru' ? 'EN' : 'RU';
+}
+
+function initLang() {
+  let lang;
+  try { lang = localStorage.getItem('sn_lang'); } catch(e) {}
+  if (!lang) lang = (navigator.language || 'ru').toLowerCase().startsWith('ru') ? 'ru' : 'en';
+  applyLang(lang);
+}
+
 const API = 'https://scamnet-api-production.up.railway.app';
 
 // ── Token management ──────────────────────────────────────────────────────────
@@ -1748,9 +1974,9 @@ function showLoggedIn(user) {
     document.getElementById('pd-avatar').src = user.avatar_url;
     document.getElementById('sm-avatar').src = user.avatar_url;
   }
-  document.getElementById('pd-name').textContent = user.name || 'Пользователь';
+  document.getElementById('pd-name').textContent = user.name || t('pd_name_default');
   document.getElementById('pd-email').textContent = user.email;
-  document.getElementById('sm-name').textContent = user.name || 'Пользователь';
+  document.getElementById('sm-name').textContent = user.name || t('pd_name_default');
   document.getElementById('sm-email').textContent = user.email;
 
   // Update registration section
@@ -1759,15 +1985,15 @@ function showLoggedIn(user) {
     card.innerHTML = `
       <div style="text-align:center;padding:20px 0;">
         ${user.avatar_url ? `<img src="${user.avatar_url}" style="width:64px;height:64px;border-radius:50%;margin-bottom:12px;" referrerpolicy="no-referrer">` : ''}
-        <div style="font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px;">${user.name || 'Пользователь'}</div>
+        <div style="font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px;">${user.name || t('pd_name_default')}</div>
         <div style="font-size:13px;color:var(--text-3);margin-bottom:20px;">${user.email}</div>
         <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:13px;color:var(--text-2);">Проверок в этом месяце</span>
+          <span style="font-size:13px;color:var(--text-2);">${t('user_card.checks_label')}</span>
           <span style="font-family:'DM Mono',monospace;font-weight:600;color:var(--text);">${user.checks_used} / ${user.checks_limit}</span>
         </div>
         <div style="display:flex;gap:10px;justify-content:center;">
-          <button onclick="openSettings()" style="font-size:13px;padding:8px 16px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:'DM Sans',sans-serif;">Настройки</button>
-          <button onclick="clearToken();location.reload();" style="font-size:13px;padding:8px 16px;border-radius:7px;border:none;background:#fdeaea;color:#cc1c1c;cursor:pointer;font-family:'DM Sans',sans-serif;">Выйти</button>
+          <button onclick="openSettings()" style="font-size:13px;padding:8px 16px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:'DM Sans',sans-serif;">${t('user_card.settings_btn')}</button>
+          <button onclick="clearToken();location.reload();" style="font-size:13px;padding:8px 16px;border-radius:7px;border:none;background:#fdeaea;color:#cc1c1c;cursor:pointer;font-family:'DM Sans',sans-serif;">${t('user_card.logout_btn')}</button>
         </div>
       </div>`;
   }
@@ -1802,9 +2028,9 @@ document.getElementById('btn-google-login').addEventListener('click', function()
     const s = await r.json();
     const nodes = document.querySelectorAll('.stat-n');
     const labels = document.querySelectorAll('.stat-l');
-    if (nodes[0]) nodes[0].textContent = s.total_checks.toLocaleString('ru');
-    if (nodes[1]) nodes[1].textContent = s.total_profiles.toLocaleString('ru');
-    if (nodes[2]) nodes[2].textContent = s.total_users.toLocaleString('ru');
+    if (nodes[0]) nodes[0].textContent = s.total_checks.toLocaleString(_lang);
+    if (nodes[1]) nodes[1].textContent = s.total_profiles.toLocaleString(_lang);
+    if (nodes[2]) nodes[2].textContent = s.total_users.toLocaleString(_lang);
   } catch(e) {}
 })();
 
@@ -1881,13 +2107,13 @@ async function checkPhoto(file) {
     const r = await fetch(API + '/check/face', { method: 'POST', headers, body: form });
     if (!r.ok) {
       const err = await r.json().catch(() => ({}));
-      alert(err.detail || 'Ошибка при проверке. Попробуйте ещё раз.');
+      alert(err.detail || t('errors.check_error'));
       return;
     }
     const data = await r.json();
     showResult(data, photoUrl);
   } catch(e) {
-    alert('Не удалось подключиться к серверу. Попробуйте позже.');
+    alert(t('errors.connect_error'));
   } finally {
     overlay.style.display = 'none';
   }
@@ -1895,17 +2121,20 @@ async function checkPhoto(file) {
 
 // ── Dossier result modal ──────────────────────────────────────────────────────
 
-const VERDICT = {
-  clean:     { label: 'ЧИСТО',        cls: 'dos-v-clean',     color: '#10b981', ringColor: '#10b981' },
-  warning:   { label: 'ОСТОРОЖНО',    cls: 'dos-v-warning',   color: '#f59e0b', ringColor: '#f59e0b' },
-  high:      { label: 'ВЫСОКИЙ РИСК', cls: 'dos-v-high',      color: '#f97316', ringColor: '#f97316' },
-  confirmed: { label: 'МОШЕННИК',     cls: 'dos-v-confirmed', color: '#ef4444', ringColor: '#ef4444' },
-};
+function getVERDICT() {
+  return {
+    clean:     { label: t('verdict.clean'),    cls: 'dos-v-clean',     color: '#10b981', ringColor: '#10b981' },
+    warning:   { label: t('verdict.warning'),  cls: 'dos-v-warning',   color: '#f59e0b', ringColor: '#f59e0b' },
+    high:      { label: t('verdict.high'),     cls: 'dos-v-high',      color: '#f97316', ringColor: '#f97316' },
+    confirmed: { label: t('verdict.confirmed'),cls: 'dos-v-confirmed', color: '#ef4444', ringColor: '#ef4444' },
+  };
+}
 
 let _lastResult = null;
 
 function showResult(data, photoUrl) {
   _lastResult = data;
+  const VERDICT = getVERDICT();
   const lv = VERDICT[data.risk_level] || VERDICT.warning;
   const p = data.profile || {};
   const bd = data.score_breakdown || {};
@@ -1937,13 +2166,13 @@ function showResult(data, photoUrl) {
   // Name & meta — prefer DB → vision (badge) → user-provided → "Неизвестно"
   const vi = data.vision_info || {};
   const uc = data.user_context || {};
-  let displayName = 'Неизвестно';
+  let displayName = t('history_labels.unknown');
   let nameSource = '';
   if (data.match_source === 'profile') {
-    displayName = p.known_as || p.real_name || 'Неизвестно';
+    displayName = p.known_as || p.real_name || t('history_labels.unknown');
     nameSource = 'db';
   } else if (data.match_source === 'reported') {
-    displayName = p.known_name || 'Неизвестно';
+    displayName = p.known_name || t('history_labels.unknown');
     nameSource = 'db';
   } else if (vi.name) {
     displayName = vi.name;
@@ -1955,10 +2184,10 @@ function showResult(data, photoUrl) {
   const nameEl = document.getElementById('dos-name');
   nameEl.textContent = displayName;
   if (nameSource === 'vision') {
-    nameEl.title = 'Имя прочитано с фото (бейдж / подпись)';
+    nameEl.title = _lang === 'ru' ? 'Имя прочитано с фото (бейдж / подпись)' : 'Name read from photo (badge / caption)';
     nameEl.style.borderBottom = '1px dashed #3d5a75';
   } else if (nameSource === 'user') {
-    nameEl.title = 'Имя указано при загрузке';
+    nameEl.title = _lang === 'ru' ? 'Имя указано при загрузке' : 'Name provided at upload';
     nameEl.style.borderBottom = '1px dashed #4a6741';
   } else {
     nameEl.title = '';
@@ -1969,9 +2198,9 @@ function showResult(data, photoUrl) {
   if (p.nationality) metaParts.push(p.nationality);
   else if (uc.country) metaParts.push(uc.country);
   if (p.current_status) metaParts.push(_statusLabel(p.current_status));
-  if (p.dob) metaParts.push('д.р. ' + p.dob);
-  if (p.platform) metaParts.push('платформа: ' + p.platform);
-  else if (uc.platform_met) metaParts.push('познакомились: ' + uc.platform_met);
+  if (p.dob) metaParts.push(t('meta.born') + ' ' + p.dob);
+  if (p.platform) metaParts.push(t('meta.platform') + ' ' + p.platform);
+  else if (uc.platform_met) metaParts.push(t('meta.met') + ' ' + uc.platform_met);
   if (vi.company && !data.match_found) metaParts.push(vi.company);
   else if (uc.company && !data.match_found) metaParts.push(uc.company);
   if (vi.notes && !data.match_found) metaParts.push(vi.notes);
@@ -2005,10 +2234,10 @@ function showResult(data, photoUrl) {
   // KPI tiles
   const kpiRow = document.getElementById('dos-kpi-row');
   const kpis = [];
-  if (p.victim_count) kpis.push({ val: p.victim_count + '+', lbl: 'жертв' });
-  if (p.total_damage_usd) kpis.push({ val: '$' + _fmt(p.total_damage_usd), lbl: 'ущерб' });
-  if (p.report_count) kpis.push({ val: p.report_count, lbl: 'жалоб' });
-  if (data.crowdsource && data.crowdsource.unique_sessions > 0) kpis.push({ val: data.crowdsource.unique_sessions, lbl: 'проверок' });
+  if (p.victim_count) kpis.push({ val: p.victim_count + '+', lbl: t('kpi.victims') });
+  if (p.total_damage_usd) kpis.push({ val: '$' + _fmt(p.total_damage_usd), lbl: t('kpi.damage') });
+  if (p.report_count) kpis.push({ val: p.report_count, lbl: t('kpi.reports') });
+  if (data.crowdsource && data.crowdsource.unique_sessions > 0) kpis.push({ val: data.crowdsource.unique_sessions, lbl: t('kpi.checks') });
   kpiRow.innerHTML = kpis.map(k => `<div class="dos-kpi"><div class="dos-kpi-val">${k.val}</div><div class="dos-kpi-lbl">${k.lbl}</div></div>`).join('');
 
   // Aliases
@@ -2034,14 +2263,14 @@ function showResult(data, photoUrl) {
   // Source tags (DOJ, court, news, forum, etc.)
   const sources = [];
   if (data.match_source === 'profile') {
-    if (p.charges || p.sentence) sources.push({ cls: 'court', label: 'СУД' });
-    if (p.victim_count > 10) sources.push({ cls: 'doj', label: 'ПОДТВЕРЖДЕНО' });
-    if (p.current_status === 'at_large') sources.push({ cls: 'police', label: 'В РОЗЫСКЕ' });
+    if (p.charges || p.sentence) sources.push({ cls: 'court', label: t('tags.court') });
+    if (p.victim_count > 10) sources.push({ cls: 'doj', label: t('tags.confirmed') });
+    if (p.current_status === 'at_large') sources.push({ cls: 'police', label: t('tags.wanted') });
   }
-  if (data.match_source === 'reported') sources.push({ cls: 'forum', label: 'ЖЕРТВА' });
-  if ((data.crowdsource?.unique_sessions || 0) > 2) sources.push({ cls: 'news', label: 'КРАУДСОРС' });
+  if (data.match_source === 'reported') sources.push({ cls: 'forum', label: t('tags.victim') });
+  if ((data.crowdsource?.unique_sessions || 0) > 2) sources.push({ cls: 'news', label: t('tags.crowdsource') });
   if (Object.keys(data.osint_social || {}).length > 0) sources.push({ cls: 'doj', label: 'OSINT' });
-  if ((data.osint_mentions || []).some(m => m.severity === 'high')) sources.push({ cls: 'forum', label: 'ФОРУМЫ' });
+  if ((data.osint_mentions || []).some(m => m.severity === 'high')) sources.push({ cls: 'forum', label: t('tags.forums') });
   const srcWrap = document.getElementById('dos-sources-wrap');
   if (sources.length) {
     srcWrap.style.display = 'block';
@@ -2081,14 +2310,14 @@ function showResult(data, photoUrl) {
   // Always show OSINT section — reverse image search runs for every photo
   osintWrap.style.display = 'block';
   document.getElementById('dos-osint-count').textContent =
-    osintCount > 0 ? osintCount + ' НАЙДЕНО' : 'ПОИСК ЗАВЕРШЁН';
+    osintCount > 0 ? t('osint.found').replace('{n}', osintCount) : t('osint.search_done');
 
   // If Yandex recognised a name and vision didn't find one, surface it
   const entities = data.osint_entities || [];
   if (entities.length && !data.match_found && !vi.name) {
     const hint = document.getElementById('dos-name');
     hint.textContent = entities[0];
-    hint.title = 'Предположительное имя — обратный поиск по фото';
+    hint.title = _lang === 'ru' ? 'Предположительное имя — обратный поиск по фото' : 'Probable name — reverse image search';
     hint.style.borderBottom = '1px dashed #3d5a75';
   }
 
@@ -2111,7 +2340,7 @@ function showResult(data, photoUrl) {
       </div>`;
     }).join('');
   } else {
-    socialEl.innerHTML = '<div class="dos-osint-empty">Профили не найдены автоматически</div>';
+    socialEl.innerHTML = `<div class="dos-osint-empty">${t('osint.social_empty')}</div>`;
   }
 
   // Forum / reverse-search mentions
@@ -2119,9 +2348,10 @@ function showResult(data, photoUrl) {
   let mentionItems = [...osintMentions];
   // Supplement with profile data if found in DB
   if (data.match_found) {
-    if (p.charges) mentionItems.unshift({ source: 'Судебный реестр', text: p.charges, severity: 'high', url: null });
-    if (p.victim_count > 0) mentionItems.push({ source: 'Жалобы пользователей', text: `${p.victim_count}+ пострадавших${p.total_damage_usd ? ', ущерб $'+_fmt(p.total_damage_usd) : ''}`, severity: 'high', url: null });
-    if ((data.crowdsource?.unique_sessions || 0) > 1) mentionItems.push({ source: 'Краудсорс Scamnet', text: `Фото проверяли ${data.crowdsource.unique_sessions} раз`, severity: 'medium', url: null });
+    const isEn = _lang === 'en';
+    if (p.charges) mentionItems.unshift({ source: isEn ? 'Court record' : 'Судебный реестр', text: p.charges, severity: 'high', url: null });
+    if (p.victim_count > 0) mentionItems.push({ source: isEn ? 'User reports' : 'Жалобы пользователей', text: isEn ? `${p.victim_count}+ victims${p.total_damage_usd ? ', damage $'+_fmt(p.total_damage_usd) : ''}` : `${p.victim_count}+ пострадавших${p.total_damage_usd ? ', ущерб $'+_fmt(p.total_damage_usd) : ''}`, severity: 'high', url: null });
+    if ((data.crowdsource?.unique_sessions || 0) > 1) mentionItems.push({ source: 'Краудсорс Scamnet', text: isEn ? `Photo checked ${data.crowdsource.unique_sessions} times` : `Фото проверяли ${data.crowdsource.unique_sessions} раз`, severity: 'medium', url: null });
   }
   if (mentionItems.length) {
     mentionsEl.innerHTML = mentionItems.map(m => {
@@ -2136,7 +2366,7 @@ function showResult(data, photoUrl) {
       </div>`;
     }).join('');
   } else {
-    mentionsEl.innerHTML = '<div class="dos-osint-empty">Упоминаний не найдено</div>';
+    mentionsEl.innerHTML = `<div class="dos-osint-empty">${t('osint.mentions_empty')}</div>`;
   }
 
   // Manual reverse search links (always shown below OSINT cols)
@@ -2153,7 +2383,7 @@ function showResult(data, photoUrl) {
     revEl.style.cssText = 'margin-top:10px;padding-top:10px;border-top:1px solid #1e2d3d;';
     osintWrap.appendChild(revEl);
   }
-  revEl.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#3d5a75;margin-bottom:7px;">ПОИСК ПО ФОТО ВРУЧНУЮ</div>
+  revEl.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#3d5a75;margin-bottom:7px;">${t('osint.manual_search')}</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
       ${Object.entries(revLinks).map(([label, url]) =>
         `<a href="${url}" target="_blank" rel="noopener" class="dos-social-link" style="font-size:11px;padding:4px 10px;">${label} ↗</a>`
@@ -2168,23 +2398,25 @@ function showResult(data, photoUrl) {
   const rows = [];
   rows.push(_arow(
     data.is_ai_generated ? '🤖' : '✓',
-    data.is_ai_generated ? `<b>ИИ-сгенерированное фото</b> — уверенность ${Math.round((data.ai_confidence||0)*100)}%` : '<b>Фото настоящее</b> — признаков генерации не найдено',
+    data.is_ai_generated
+      ? t('analysis.ai_true').replace('{pct}', Math.round((data.ai_confidence||0)*100))
+      : t('analysis.ai_false'),
     data.is_ai_generated ? '#ef4444' : '#10b981',
     bd.ai_flag || 0, 20
   ));
   rows.push(_arow(
     data.match_found ? '⚠' : '✓',
     data.match_found
-      ? `<b>Найден в базе мошенников</b> — совпадение ${Math.round((data.match_confidence||0)*100)}%` + (data.match_source === 'reported' ? ' (жалоба жертвы)' : ' (верифицировано)')
-      : '<b>В базе не найден</b> — в базе мошенников отсутствует',
+      ? t('analysis.match_true').replace('{pct}', Math.round((data.match_confidence||0)*100)) + (data.match_source === 'reported' ? t('analysis.match_reported') : t('analysis.match_verified'))
+      : t('analysis.match_false'),
     data.match_found ? lv.color : '#10b981',
     bd.db_match || 0, 60
   ));
   if ((data.crowdsource?.unique_sessions || 0) > 1) {
-    rows.push(_arow('ℹ', `<b>Краудсорсинг:</b> это фото проверяли ${data.crowdsource.unique_sessions} раз независимо`, '#f59e0b', bd.crowdsource || 0, 25));
+    rows.push(_arow('ℹ', t('analysis.crowdsource').replace('{n}', data.crowdsource.unique_sessions), '#f59e0b', bd.crowdsource || 0, 25));
   }
   if (bd.reports > 0) {
-    rows.push(_arow('⚑', `<b>Жалобы:</b> поступали обращения по данному лицу`, '#f97316', bd.reports || 0, 20));
+    rows.push(_arow('⚑', t('analysis.reports'), '#f97316', bd.reports || 0, 20));
   }
   document.getElementById('dos-analysis-rows').innerHTML = rows.join('');
 
@@ -2206,10 +2438,10 @@ function showResult(data, photoUrl) {
   const sanctions = data.sanctions || [];
   if (sanctions.length) {
     const sanctionHtml = sanctions.map(s => `<div class="dos-intel-row dos-intel-danger">
-      <span class="dos-intel-label">⚠ ${s.name || 'Неизвестно'}</span>
+      <span class="dos-intel-label">⚠ ${s.name || t('history_labels.unknown')}</span>
       <span class="dos-intel-val">${[s.dataset, s.country].filter(Boolean).join(' · ') || ''}</span>
     </div>`).join('');
-    _intelCard('dos-sanctions', '🚫 САНКЦИОННЫЕ СПИСКИ', sanctionHtml);
+    _intelCard('dos-sanctions', t('intel.sanctions'), sanctionHtml);
   } else {
     _intelCard('dos-sanctions', null, null);
   }
@@ -2219,18 +2451,18 @@ function showResult(data, photoUrl) {
   if (pi) {
     const voipWarn = pi.line_type === 'voip' ? ' <span class="dos-badge-warn">VoIP ⚠</span>' : '';
     const phoneHtml = `<div class="dos-intel-row">
-      <span class="dos-intel-label">Номер</span><span class="dos-intel-val">${pi.international_format || pi.number || '—'}</span>
+      <span class="dos-intel-label">${t('phone_row.number')}</span><span class="dos-intel-val">${pi.international_format || pi.number || '—'}</span>
     </div>
     <div class="dos-intel-row">
-      <span class="dos-intel-label">Тип линии</span><span class="dos-intel-val">${pi.line_type || '—'}${voipWarn}</span>
+      <span class="dos-intel-label">${t('phone_row.line_type')}</span><span class="dos-intel-val">${pi.line_type || '—'}${voipWarn}</span>
     </div>
     <div class="dos-intel-row">
-      <span class="dos-intel-label">Оператор</span><span class="dos-intel-val">${pi.carrier || '—'}</span>
+      <span class="dos-intel-label">${t('phone_row.carrier')}</span><span class="dos-intel-val">${pi.carrier || '—'}</span>
     </div>
     <div class="dos-intel-row">
-      <span class="dos-intel-label">Страна</span><span class="dos-intel-val">${pi.country_name || pi.country_code || '—'}</span>
+      <span class="dos-intel-label">${t('phone_row.country')}</span><span class="dos-intel-val">${pi.country_name || pi.country_code || '—'}</span>
     </div>`;
-    _intelCard('dos-phone', '📞 ТЕЛЕФОН', phoneHtml);
+    _intelCard('dos-phone', t('intel.phone'), phoneHtml);
   } else {
     _intelCard('dos-phone', null, null);
   }
@@ -2242,8 +2474,8 @@ function showResult(data, photoUrl) {
       <span class="dos-intel-label">Username</span>
       <span class="dos-intel-val">${tg.url ? `<a href="${tg.url}" target="_blank" rel="noopener">${tg.username || tg.url}</a>` : (tg.username || '—')}</span>
     </div>
-    ${tg.title ? `<div class="dos-intel-row"><span class="dos-intel-label">Имя в Telegram</span><span class="dos-intel-val">${tg.title}</span></div>` : ''}`;
-    _intelCard('dos-telegram', '✈️ TELEGRAM ПОДТВЕРЖДЁН', tgHtml);
+    ${tg.title ? `<div class="dos-intel-row"><span class="dos-intel-label">${t('tg_row.name')}</span><span class="dos-intel-val">${tg.title}</span></div>` : ''}`;
+    _intelCard('dos-telegram', t('intel.telegram'), tgHtml);
   } else {
     _intelCard('dos-telegram', null, null);
   }
@@ -2255,7 +2487,7 @@ function showResult(data, photoUrl) {
       <span class="dos-intel-label">💧 ${b.Name || b}</span>
       <span class="dos-intel-val">${b.BreachDate || ''}</span>
     </div>`).join('');
-    _intelCard('dos-breaches', `📧 УТЕЧКИ EMAIL (${breaches.length})`, breachHtml);
+    _intelCard('dos-breaches', t('intel.breaches').replace('{n}', breaches.length), breachHtml);
   } else {
     _intelCard('dos-breaches', null, null);
   }
@@ -2264,18 +2496,18 @@ function showResult(data, photoUrl) {
   const er = data.emailrep;
   if (er) {
     const repColor = er.reputation === 'high' ? '' : (er.reputation === 'low' || er.suspicious ? ' dos-intel-danger' : ' dos-intel-warn');
-    const repLabel = {'high':'✅ Надёжный','medium':'⚠ Средний','low':'🚨 Низкий','none':'❓ Неизвестный'}[er.reputation] || er.reputation;
+    const repLabel = {high: t('emailrep_row.rep_high'), medium: t('emailrep_row.rep_medium'), low: t('emailrep_row.rep_low'), none: t('emailrep_row.rep_none')}[er.reputation] || er.reputation;
     let erRows = `<div class="dos-intel-row${repColor}">
-      <span class="dos-intel-label">Репутация</span><span class="dos-intel-val">${repLabel}</span>
+      <span class="dos-intel-label">${t('emailrep_row.reputation')}</span><span class="dos-intel-val">${repLabel}</span>
     </div>`;
-    if (er.suspicious) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">⚠ Подозрительный</span><span class="dos-intel-val">Email помечен как подозрительный</span></div>`;
-    if (er.blacklisted) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">🚫 Чёрный список</span><span class="dos-intel-val">Занесён в блок-листы</span></div>`;
-    if (er.malicious_activity) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">☠ Вредоносная активность</span><span class="dos-intel-val">${er.malicious_activity_recent ? 'Недавно' : 'Зафиксирована'}</span></div>`;
-    if (er.spam) erRows += `<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">📩 Спам</span><span class="dos-intel-val">Источник спама</span></div>`;
-    if (er.disposable) erRows += `<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">🗑 Временный</span><span class="dos-intel-val">Одноразовый адрес</span></div>`;
-    if (er.days_since_domain_creation != null) erRows += `<div class="dos-intel-row"><span class="dos-intel-label">Возраст домена</span><span class="dos-intel-val">${er.days_since_domain_creation} дней</span></div>`;
-    if (er.references != null) erRows += `<div class="dos-intel-row"><span class="dos-intel-label">Упоминаний</span><span class="dos-intel-val">${er.references}</span></div>`;
-    _intelCard('dos-emailrep', '🔍 РЕПУТАЦИЯ EMAIL', erRows);
+    if (er.suspicious) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">${t('emailrep_row.suspicious')}</span><span class="dos-intel-val">${t('emailrep_row.suspicious_val')}</span></div>`;
+    if (er.blacklisted) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">${t('emailrep_row.blacklisted')}</span><span class="dos-intel-val">${t('emailrep_row.blacklisted_val')}</span></div>`;
+    if (er.malicious_activity) erRows += `<div class="dos-intel-row dos-intel-danger"><span class="dos-intel-label">${t('emailrep_row.malicious')}</span><span class="dos-intel-val">${er.malicious_activity_recent ? t('emailrep_row.malicious_recent') : t('emailrep_row.malicious_val')}</span></div>`;
+    if (er.spam) erRows += `<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">${t('emailrep_row.spam')}</span><span class="dos-intel-val">${t('emailrep_row.spam_val')}</span></div>`;
+    if (er.disposable) erRows += `<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">${t('emailrep_row.disposable')}</span><span class="dos-intel-val">${t('emailrep_row.disposable_val')}</span></div>`;
+    if (er.days_since_domain_creation != null) erRows += `<div class="dos-intel-row"><span class="dos-intel-label">${t('emailrep_row.domain_age')}</span><span class="dos-intel-val">${t('emailrep_row.domain_age_val').replace('{n}', er.days_since_domain_creation)}</span></div>`;
+    if (er.references != null) erRows += `<div class="dos-intel-row"><span class="dos-intel-label">${t('emailrep_row.references')}</span><span class="dos-intel-val">${er.references}</span></div>`;
+    _intelCard('dos-emailrep', t('intel.emailrep'), erRows);
   } else {
     _intelCard('dos-emailrep', null, null);
   }
@@ -2286,12 +2518,22 @@ function showResult(data, photoUrl) {
   if (exifSignals.length || exif.has_exif) {
     const exifRows = [];
     if (exif.has_exif) {
-      if (exif.camera_make || exif.camera_model) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">Камера</span><span class="dos-intel-val">${[exif.camera_make, exif.camera_model].filter(Boolean).join(' ')}</span></div>`);
-      if (exif.software) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">ПО</span><span class="dos-intel-val">${exif.software}</span></div>`);
-      if (exif.date_taken) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">Дата съёмки</span><span class="dos-intel-val">${exif.date_taken}</span></div>`);
+      if (exif.camera_make || exif.camera_model) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">${t('exif_row.camera')}</span><span class="dos-intel-val">${[exif.camera_make, exif.camera_model].filter(Boolean).join(' ')}</span></div>`);
+      if (exif.software) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">${t('exif_row.software')}</span><span class="dos-intel-val">${exif.software}</span></div>`);
+      if (exif.date_taken) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">${t('exif_row.date_taken')}</span><span class="dos-intel-val">${exif.date_taken}</span></div>`);
     }
-    exifSignals.forEach(s => exifRows.push(`<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">⚠</span><span class="dos-intel-val">${s}</span></div>`));
-    _intelCard('dos-exif', '📷 EXIF МЕТАДАННЫЕ', exifRows.join(''));
+    exifSignals.forEach(s => {
+      const code = s.startsWith('ai_software:') ? s : s;
+      let label;
+      if (s.startsWith('ai_software:')) {
+        const sw = s.slice('ai_software:'.length);
+        label = _lang === 'ru' ? `ПО: ${sw} — AI-генератор` : `Software: ${sw} — AI generator`;
+      } else {
+        label = t('exif_signals.' + s) !== 'exif_signals.' + s ? t('exif_signals.' + s) : s;
+      }
+      exifRows.push(`<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">⚠</span><span class="dos-intel-val">${label}</span></div>`);
+    });
+    _intelCard('dos-exif', t('intel.exif'), exifRows.join(''));
   } else {
     _intelCard('dos-exif', null, null);
   }
@@ -2302,7 +2544,7 @@ function showResult(data, photoUrl) {
   if (data.match_found && totalComplaints > 0) {
     cbar.style.display = 'flex';
     cbar.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    По данному лицу зафиксировано <strong style="margin-inline:4px">${totalComplaints}</strong> жалоб(ы) и обращений`;
+    ${t('complaint').replace('{n}', totalComplaints)}`;
   } else {
     cbar.style.display = 'none';
   }
@@ -2319,8 +2561,10 @@ function showResult(data, photoUrl) {
     cbar2.style.color = '#f97316';
     cbar2.style.borderTopColor = 'rgba(249,115,22,.15)';
     cbar2.style.background = 'rgba(249,115,22,.06)';
-    if (p.charges) cbar2.innerHTML += `Обвинения: <strong style="margin-left:4px">${p.charges}</strong>`;
-    if (p.sentence) cbar2.innerHTML += `${p.charges ? ' · ' : ''}Приговор: <strong style="margin-left:4px">${p.sentence}</strong>`;
+    const chargeLabel = _lang === 'ru' ? 'Обвинения' : 'Charges';
+    const sentLabel = _lang === 'ru' ? 'Приговор' : 'Sentence';
+    if (p.charges) cbar2.innerHTML += `${chargeLabel}: <strong style="margin-left:4px">${p.charges}</strong>`;
+    if (p.sentence) cbar2.innerHTML += `${p.charges ? ' · ' : ''}${sentLabel}: <strong style="margin-left:4px">${p.sentence}</strong>`;
   }
 
   // Open modal
@@ -2359,7 +2603,7 @@ function _fmt(n) {
 }
 
 function _statusLabel(s) {
-  return { at_large:'в розыске', convicted:'осуждён', released:'освобождён', under_investigation:'под следствием' }[s] || s;
+  return t('status.' + s) !== 'status.' + s ? t('status.' + s) : (s || '');
 }
 
 function _platformIcon(name) {
@@ -2411,17 +2655,18 @@ function renderHistory() {
     if (!hist.length) { wrap.style.display = 'none'; return; }
     const list = document.getElementById('history-list');
     wrap.style.display = 'block';
-    const VERDLABEL = { clean:'Чисто', warning:'Осторожно', high:'Высокий риск', confirmed:'Мошенник' };
+    const VERDLABEL = { clean: t('history_labels.clean'), warning: t('history_labels.warning'), high: t('history_labels.high'), confirmed: t('history_labels.confirmed') };
     const VERDCOL = { clean:'#10b981', warning:'#f59e0b', high:'#f97316', confirmed:'#ef4444' };
+    const dateLocale = _lang === 'ru' ? 'ru' : 'en-GB';
     list.innerHTML = hist.map((h, i) => {
       const d = new Date(h.ts);
-      const ts = d.toLocaleDateString('ru',{day:'2-digit',month:'short'}) + ' ' + d.toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'});
+      const ts = d.toLocaleDateString(dateLocale,{day:'2-digit',month:'short'}) + ' ' + d.toLocaleTimeString(dateLocale,{hour:'2-digit',minute:'2-digit'});
       const col = VERDCOL[h.risk_level] || '#6a8ba8';
       const lbl = VERDLABEL[h.risk_level] || h.risk_level;
       return `<div class="history-item" onclick="reopenHistory(${i})">
         <div class="history-dot" style="background:${col}"></div>
         <div class="history-meta">
-          <div class="history-hname">${h.display_name || 'Неизвестно'}</div>
+          <div class="history-hname">${h.display_name || t('history_labels.unknown')}</div>
           <div class="history-hts">${ts}</div>
         </div>
         <div class="history-hbadge" style="background:${col}22;color:${col};border:1px solid ${col}44">${lbl}</div>
@@ -2468,11 +2713,11 @@ function closeReportModal() {
 
 function rNextStep(n) {
   if (n === 2 && !_rPhotoFile) {
-    alert('Пожалуйста, загрузите фото мошенника');
+    alert(t('errors.upload_no_photo'));
     return;
   }
   if (n === 3 && !_rScamType) {
-    alert('Выберите тип мошенничества');
+    alert(t('errors.upload_no_type'));
     return;
   }
   _rGoto(n);
@@ -2502,10 +2747,10 @@ function onRPhotoSelect(input) {
 }
 
 async function submitReport() {
-  if (!_rPhotoFile) { alert('Нужно фото'); return; }
-  if (!_rScamType) { alert('Выберите тип мошенничества'); return; }
+  if (!_rPhotoFile) { alert(t('errors.submit_no_photo')); return; }
+  if (!_rScamType) { alert(t('errors.upload_no_type')); return; }
   const btn = document.getElementById('rSubmitBtn');
-  btn.textContent = 'Отправляем…';
+  btn.textContent = t('report.submitting');
   btn.disabled = true;
   try {
     const form = new FormData();
@@ -2529,12 +2774,13 @@ async function submitReport() {
   } catch(e) {
     alert('Ошибка: ' + e.message);
   } finally {
-    btn.textContent = 'Отправить в базу';
+    btn.textContent = t('report.submit_btn');
     btn.disabled = false;
   }
 }
 
-// Init history on load
+// Init i18n and history on load
+initLang();
 renderHistory();
 
 function switchMainTab(btn, tabId) {
