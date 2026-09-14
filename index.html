@@ -1944,84 +1944,86 @@ function showResult(data, photoUrl) {
   const osintCount = socialEntries.length + osintMentions.length;
   const osintWrap = document.getElementById('dos-osint-wrap');
 
-  if (osintCount > 0) {
-    osintWrap.style.display = 'block';
-    document.getElementById('dos-osint-count').textContent = osintCount + ' НАЙДЕНО';
+  // Always show OSINT section — reverse image search runs for every photo
+  osintWrap.style.display = 'block';
+  document.getElementById('dos-osint-count').textContent =
+    osintCount > 0 ? osintCount + ' НАЙДЕНО' : 'ПОИСК ЗАВЕРШЁН';
 
-    // Social profiles
-    const socialEl = document.getElementById('dos-osint-social');
-    if (socialEntries.length) {
-      socialEl.innerHTML = socialEntries.map(([name, url]) => {
-        const key = name.toLowerCase();
-        const iconCls = key.includes('vk') ? 'vk' : key.includes('inst') ? 'ig' : key.includes('tele') ? 'tg' :
-          key.includes('face') ? 'fb' : key.includes('twit') || key.includes('x.com') ? 'tw' :
-          key.includes('whats') ? 'wa' : key.includes('yout') ? 'yt' : key.includes('ok.ru') ? 'ok' :
-          key.includes('linked') ? 'ln' : 'df';
-        const handle = url ? url.replace(/https?:\/\/(www\.)?/,'').replace(/\/$/,'') : name;
-        return `<div class="dos-social-item">
-          <div class="dos-social-icon ${iconCls}">${_platformEmoji(name)}</div>
-          <div style="flex:1;min-width:0;">
-            <div class="dos-social-name">${name}</div>
-            <div class="dos-social-handle">${handle}</div>
-          </div>
-          ${url ? `<a href="${url}" target="_blank" rel="noopener" class="dos-social-link-btn" title="Открыть профиль">↗</a>` : ''}
-        </div>`;
-      }).join('');
-    } else {
-      socialEl.innerHTML = '<div class="dos-osint-empty">Соцсети не найдены</div>';
-    }
-
-    // Forum mentions
-    const mentionsEl = document.getElementById('dos-osint-mentions');
-    if (osintMentions.length) {
-      mentionsEl.innerHTML = osintMentions.map(m => {
-        const dotCls = m.severity === 'high' ? '' : m.severity === 'medium' ? 'amber' : 'blue';
-        return `<div class="dos-mention-item">
-          <div class="dos-mention-dot ${dotCls}"></div>
-          <div class="dos-mention-body">
-            <div class="dos-mention-src">${m.source || 'Форум'}</div>
-            <div class="dos-mention-text">${m.text || ''}</div>
-          </div>
-          ${m.url ? `<a href="${m.url}" target="_blank" rel="noopener" class="dos-mention-link">↗</a>` : ''}
-        </div>`;
-      }).join('');
-    } else if (data.match_found) {
-      // Show placeholder based on profile data
-      const placeholders = [];
-      if (p.charges) placeholders.push({ source: 'Судебный реестр', text: p.charges, severity: 'high', url: null });
-      if (p.victim_count > 0) placeholders.push({ source: 'Жалобы пользователей', text: `${p.victim_count}+ пострадавших, ущерб ${p.total_damage_usd ? '$'+_fmt(p.total_damage_usd) : 'неизвестен'}`, severity: 'high', url: null });
-      if (data.crowdsource?.unique_sessions > 1) placeholders.push({ source: 'Краудсорс Scamnet', text: `Фото проверяли ${data.crowdsource.unique_sessions} раз`, severity: 'medium', url: null });
-      if (placeholders.length) {
-        mentionsEl.innerHTML = placeholders.map(m => {
-          const dotCls = m.severity === 'high' ? '' : 'amber';
-          return `<div class="dos-mention-item">
-            <div class="dos-mention-dot ${dotCls}"></div>
-            <div class="dos-mention-body">
-              <div class="dos-mention-src">${m.source}</div>
-              <div class="dos-mention-text">${m.text}</div>
-            </div>
-          </div>`;
-        }).join('');
-      } else {
-        mentionsEl.innerHTML = '<div class="dos-osint-empty">Упоминаний не найдено</div>';
-      }
-    } else {
-      mentionsEl.innerHTML = '<div class="dos-osint-empty">Упоминаний не найдено</div>';
-    }
-  } else if (data.match_found) {
-    // Always show OSINT block for matches, even without social data
-    osintWrap.style.display = 'block';
-    document.getElementById('dos-osint-count').textContent = 'АНАЛИЗ ЗАВЕРШЁН';
-    document.getElementById('dos-osint-social').innerHTML = '<div class="dos-osint-empty">Соцсети не найдены</div>';
-    const fallback = [];
-    if (p.charges) fallback.push({ source: 'Судебный реестр', text: p.charges });
-    if (p.victim_count > 0) fallback.push({ source: 'Жалобы', text: `${p.victim_count}+ пострадавших` });
-    document.getElementById('dos-osint-mentions').innerHTML = fallback.length
-      ? fallback.map(m => `<div class="dos-mention-item"><div class="dos-mention-dot"></div><div class="dos-mention-body"><div class="dos-mention-src">${m.source}</div><div class="dos-mention-text">${m.text}</div></div></div>`).join('')
-      : '<div class="dos-osint-empty">Упоминаний не найдено</div>';
-  } else {
-    osintWrap.style.display = 'none';
+  // If Yandex recognised a name, surface it as a hint
+  const entities = data.osint_entities || [];
+  if (entities.length && !data.match_found) {
+    const hint = document.getElementById('dos-name');
+    hint.textContent = entities[0];
+    hint.title = 'Предположительное имя — обратный поиск по фото';
   }
+
+  // Social profiles
+  const socialEl = document.getElementById('dos-osint-social');
+  if (socialEntries.length) {
+    socialEl.innerHTML = socialEntries.map(([name, url]) => {
+      const key = name.toLowerCase();
+      const iconCls = key.includes('vk') ? 'vk' : key.includes('inst') ? 'ig' : key.includes('tele') ? 'tg' :
+        key.includes('face') ? 'fb' : key.includes('twit') || key.includes('x.com') ? 'tw' :
+        key.includes('linked') ? 'ln' : key.includes('yout') ? 'yt' : key.includes('ok') ? 'ok' : 'df';
+      const handle = url ? url.replace(/https?:\/\/(www\.)?/,'').replace(/\/$/,'') : name;
+      return `<div class="dos-social-item">
+        <div class="dos-social-icon ${iconCls}">${_platformEmoji(name)}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="dos-social-name">${name}</div>
+          <div class="dos-social-handle">${handle}</div>
+        </div>
+        ${url ? `<a href="${url}" target="_blank" rel="noopener" class="dos-social-link-btn">↗</a>` : ''}
+      </div>`;
+    }).join('');
+  } else {
+    socialEl.innerHTML = '<div class="dos-osint-empty">Профили не найдены автоматически</div>';
+  }
+
+  // Forum / reverse-search mentions
+  const mentionsEl = document.getElementById('dos-osint-mentions');
+  let mentionItems = [...osintMentions];
+  // Supplement with profile data if found in DB
+  if (data.match_found) {
+    if (p.charges) mentionItems.unshift({ source: 'Судебный реестр', text: p.charges, severity: 'high', url: null });
+    if (p.victim_count > 0) mentionItems.push({ source: 'Жалобы пользователей', text: `${p.victim_count}+ пострадавших${p.total_damage_usd ? ', ущерб $'+_fmt(p.total_damage_usd) : ''}`, severity: 'high', url: null });
+    if ((data.crowdsource?.unique_sessions || 0) > 1) mentionItems.push({ source: 'Краудсорс Scamnet', text: `Фото проверяли ${data.crowdsource.unique_sessions} раз`, severity: 'medium', url: null });
+  }
+  if (mentionItems.length) {
+    mentionsEl.innerHTML = mentionItems.map(m => {
+      const dotCls = m.severity === 'high' ? '' : m.severity === 'medium' ? 'amber' : 'blue';
+      return `<div class="dos-mention-item">
+        <div class="dos-mention-dot ${dotCls}"></div>
+        <div class="dos-mention-body">
+          <div class="dos-mention-src">${m.source || 'Обратный поиск'}</div>
+          <div class="dos-mention-text">${m.text || ''}</div>
+        </div>
+        ${m.url ? `<a href="${m.url}" target="_blank" rel="noopener" class="dos-mention-link">↗</a>` : ''}
+      </div>`;
+    }).join('');
+  } else {
+    mentionsEl.innerHTML = '<div class="dos-osint-empty">Упоминаний не найдено</div>';
+  }
+
+  // Manual reverse search links (always shown below OSINT cols)
+  const revLinks = data.osint_reverse_links || {
+    'Yandex Картинки': 'https://yandex.ru/images/',
+    'Google Lens':     'https://lens.google.com/',
+    'TinEye':          'https://tineye.com/',
+    'PimEyes':         'https://pimeyes.com/en',
+  };
+  let revEl = document.getElementById('dos-osint-rev');
+  if (!revEl) {
+    revEl = document.createElement('div');
+    revEl.id = 'dos-osint-rev';
+    revEl.style.cssText = 'margin-top:10px;padding-top:10px;border-top:1px solid #1e2d3d;';
+    osintWrap.appendChild(revEl);
+  }
+  revEl.innerHTML = `<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#3d5a75;margin-bottom:7px;">ПОИСК ПО ФОТО ВРУЧНУЮ</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;">
+      ${Object.entries(revLinks).map(([label, url]) =>
+        `<a href="${url}" target="_blank" rel="noopener" class="dos-social-link" style="font-size:11px;padding:4px 10px;">${label} ↗</a>`
+      ).join('')}
+    </div>`;
 
   // Legacy social links (keep hidden now — replaced by OSINT section)
   const swrap = document.getElementById('dos-social-wrap');
