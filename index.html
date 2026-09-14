@@ -80,6 +80,18 @@ body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;c
 .u-label{font-weight:600;font-size:16px;color:var(--text);margin-bottom:6px;position:relative;z-index:1;}
 .u-sub{font-size:13px;color:var(--text-3);margin-bottom:20px;position:relative;z-index:1;}
 .u-note{font-size:12px;color:var(--text-3);margin-top:13px;position:relative;z-index:1;}
+.ctx-toggle{display:flex;align-items:center;gap:6px;width:100%;padding:10px 0 0;background:none;border:none;cursor:pointer;color:var(--text-3);font-size:12px;font-family:inherit;transition:color .15s;}
+.ctx-toggle:hover{color:var(--text-2);}
+.ctx-toggle svg{width:13px;height:13px;transition:transform .2s;}
+.ctx-toggle.open svg{transform:rotate(90deg);}
+.ctx-fields{display:none;margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ctx-fields.hidden{display:none;}
+.ctx-field{display:flex;flex-direction:column;gap:4px;}
+.ctx-field.full{grid-column:1/-1;}
+.ctx-field label{font-size:11px;color:var(--text-3);font-weight:500;letter-spacing:.04em;text-transform:uppercase;}
+.ctx-field input,.ctx-field select{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--text);font-family:inherit;outline:none;transition:border-color .15s;width:100%;}
+.ctx-field input:focus,.ctx-field select:focus{border-color:var(--accent-br);}
+.ctx-field select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%23888' stroke-width='1.5'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
 .wave-icon{display:flex;align-items:flex-end;justify-content:center;gap:3px;height:40px;margin-inline:auto;margin-bottom:16px;position:relative;z-index:1;}
 .wave-bar{width:4px;border-radius:2px;background:var(--accent-br);opacity:.5;}
 .wave-bar:nth-child(1){height:16px;animation:wavebounce 1.2s ease-in-out .0s infinite alternate;}
@@ -720,6 +732,46 @@ footer{padding-block:38px;}
           </button>
           <input type="file" id="file-input-photo" accept="image/*" style="display:none">
           <div class="u-note">или перетащи сюда</div>
+        </div>
+        <div id="ctx-wrap" style="padding:0 4px 4px">
+          <button class="ctx-toggle" type="button" id="ctx-toggle-btn" onclick="toggleCtx()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            Дополнительно: имя, ник, платформа знакомства
+          </button>
+          <div class="ctx-fields hidden" id="ctx-fields">
+            <div class="ctx-field">
+              <label for="ctx-name">Как представился</label>
+              <input type="text" id="ctx-name" placeholder="Например: Дмитрий Романов">
+            </div>
+            <div class="ctx-field">
+              <label for="ctx-username">Ник / username</label>
+              <input type="text" id="ctx-username" placeholder="@handle или логин">
+            </div>
+            <div class="ctx-field">
+              <label for="ctx-company">Компания / должность</label>
+              <input type="text" id="ctx-company" placeholder="Где работает по его словам">
+            </div>
+            <div class="ctx-field">
+              <label for="ctx-country">Страна или город</label>
+              <input type="text" id="ctx-country" placeholder="Откуда он">
+            </div>
+            <div class="ctx-field full">
+              <label for="ctx-platform">Где познакомились</label>
+              <select id="ctx-platform">
+                <option value="">Не указано</option>
+                <option>Tinder</option>
+                <option>Bumble</option>
+                <option>Instagram</option>
+                <option>Telegram</option>
+                <option>WhatsApp</option>
+                <option>Facebook</option>
+                <option>VK</option>
+                <option>LinkedIn</option>
+                <option>Знакомство вживую</option>
+                <option>Другое</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div id="history-wrap" class="history-wrap" style="display:none">
           <div class="history-title">История проверок</div>
@@ -1739,6 +1791,15 @@ document.getElementById('btn-google-login').addEventListener('click', function()
   } catch(e) {}
 })();
 
+// ── Context fields toggle ─────────────────────────────────────────────────────
+function toggleCtx() {
+  const btn = document.getElementById('ctx-toggle-btn');
+  const fields = document.getElementById('ctx-fields');
+  const open = !fields.classList.contains('hidden');
+  fields.classList.toggle('hidden', open);
+  btn.classList.toggle('open', !open);
+}
+
 // ── Photo upload & check ──────────────────────────────────────────────────────
 document.getElementById('btn-pick-photo').addEventListener('click', () => {
   document.getElementById('file-input-photo').click();
@@ -1770,6 +1831,16 @@ async function checkPhoto(file) {
   try {
     const form = new FormData();
     form.append('file', file);
+    const ctxName = document.getElementById('ctx-name')?.value.trim();
+    const ctxUsername = document.getElementById('ctx-username')?.value.trim();
+    const ctxCompany = document.getElementById('ctx-company')?.value.trim();
+    const ctxCountry = document.getElementById('ctx-country')?.value.trim();
+    const ctxPlatform = document.getElementById('ctx-platform')?.value.trim();
+    if (ctxName)     form.append('known_name', ctxName);
+    if (ctxUsername) form.append('username', ctxUsername);
+    if (ctxCompany)  form.append('company', ctxCompany);
+    if (ctxCountry)  form.append('country', ctxCountry);
+    if (ctxPlatform) form.append('platform_met', ctxPlatform);
     const headers = {'Authorization': 'Bearer ' + getToken()};
     const r = await fetch(API + '/check/face', { method: 'POST', headers, body: form });
     if (!r.ok) {
