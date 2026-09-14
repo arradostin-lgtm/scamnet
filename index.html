@@ -559,6 +559,23 @@ body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;c
 .dos-src-tag.forum{background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.2);}
 .dos-src-tag.police{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.2);}
 
+/* ID GRID (4 metadata fields in info col) */
+.dos-id-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:10px 0 12px;}
+.dos-id-key{font-family:'DM Mono',monospace;font-size:9px;color:#3d5a75;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;}
+.dos-id-val{font-size:12.5px;font-weight:500;color:#e2eaf3;}
+.dos-id-val.red{color:#ef4444;}
+.dos-id-val.amber{color:#f59e0b;}
+.dos-id-val.green{color:#10b981;}
+.dos-id-val.mono{font-family:'DM Mono',monospace;font-size:11px;}
+
+/* CRIMINAL RECORD BLOCK */
+.dos-record-block{margin:0 22px 16px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.18);border-radius:9px;padding:13px 16px;}
+.dos-record-charge{font-size:13px;font-weight:600;color:#e2eaf3;margin-bottom:8px;}
+.dos-record-rows{display:flex;flex-direction:column;gap:5px;}
+.dos-record-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+.dos-record-key{font-family:'DM Mono',monospace;font-size:10px;color:#3d5a75;}
+.dos-record-val{font-size:11.5px;font-weight:600;color:#ef4444;text-align:right;font-variant-numeric:tabular-nums;}
+
 /* CHECK HISTORY */
 .history-wrap{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);}
 .history-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-3);margin-bottom:10px;}
@@ -1495,6 +1512,10 @@ footer{padding-block:38px;}
       <button class="dos-close" onclick="closeDossier()">×</button>
     </div>
 
+    <div id="dos-sources-wrap" style="display:none;padding:8px 22px 12px;border-bottom:1px solid #1e2d3d;background:#0a1520;">
+      <div class="dos-source-tags" id="dos-source-tags"></div>
+    </div>
+
     <div class="dos-grid">
       <div class="dos-photo-col">
         <div class="dos-photo-box">
@@ -1520,6 +1541,24 @@ footer{padding-block:38px;}
       <div class="dos-info-col">
         <div id="dos-name" class="dos-name">Анализируется…</div>
         <div id="dos-meta" class="dos-meta-line"></div>
+        <div id="dos-id-grid" class="dos-id-grid" style="display:none">
+          <div>
+            <div class="dos-id-key">НАСТОЯЩЕЕ ИМЯ</div>
+            <div class="dos-id-val" id="dos-real-name">—</div>
+          </div>
+          <div>
+            <div class="dos-id-key">СТАТУС</div>
+            <div class="dos-id-val" id="dos-id-status">—</div>
+          </div>
+          <div>
+            <div class="dos-id-key">ГРАЖДАНСТВО</div>
+            <div class="dos-id-val" id="dos-id-nationality">—</div>
+          </div>
+          <div>
+            <div class="dos-id-key">ДАТА ПРИГОВОРА</div>
+            <div class="dos-id-val mono" id="dos-id-verdict-date">—</div>
+          </div>
+        </div>
         <div id="dos-kpi-row" class="dos-kpi-row"></div>
         <div id="dos-aliases-wrap" style="display:none">
           <div class="dos-section-label">ПСЕВДОНИМЫ</div>
@@ -1532,8 +1571,18 @@ footer{padding-block:38px;}
       </div>
     </div>
 
-    <div id="dos-sources-wrap" style="display:none;padding:0 22px 14px;">
-      <div class="dos-source-tags" id="dos-source-tags"></div>
+    <div id="dos-record-block" class="dos-record-block" style="display:none">
+      <div class="dos-record-charge" id="dos-charge-text"></div>
+      <div class="dos-record-rows">
+        <div class="dos-record-row">
+          <span class="dos-record-key">Приговор</span>
+          <span class="dos-record-val" id="dos-sentence-text">—</span>
+        </div>
+        <div class="dos-record-row">
+          <span class="dos-record-key">Дата</span>
+          <span class="dos-record-val" id="dos-verdict-date-text">—</span>
+        </div>
+      </div>
     </div>
 
     <div class="dos-divider"></div>
@@ -1793,6 +1842,31 @@ function showResult(data, photoUrl) {
   if (p.dob) metaParts.push('д.р. ' + p.dob);
   if (data.match_source === 'reported' && p.platform) metaParts.push('платформа: ' + p.platform);
   document.getElementById('dos-meta').textContent = metaParts.join(' · ');
+
+  // ID grid (настоящее имя / статус / гражданство / дата приговора)
+  const idGrid = document.getElementById('dos-id-grid');
+  if (data.match_source === 'profile' && (p.real_name || p.known_as || p.current_status || p.nationality || p.verdict_date)) {
+    idGrid.style.display = 'grid';
+    document.getElementById('dos-real-name').textContent = p.real_name || p.known_as || '—';
+    const statusEl = document.getElementById('dos-id-status');
+    statusEl.textContent = _statusLabel(p.current_status) || '—';
+    statusEl.className = 'dos-id-val' + (p.current_status === 'at_large' ? ' red' : p.current_status === 'convicted' || p.current_status === 'on_trial' ? ' amber' : '');
+    document.getElementById('dos-id-nationality').textContent = p.nationality || '—';
+    document.getElementById('dos-id-verdict-date').textContent = p.verdict_date || '—';
+  } else {
+    idGrid.style.display = 'none';
+  }
+
+  // Criminal record block
+  const recordBlock = document.getElementById('dos-record-block');
+  if (p.charges || p.sentence) {
+    recordBlock.style.display = 'block';
+    document.getElementById('dos-charge-text').textContent = p.charges || '';
+    document.getElementById('dos-sentence-text').textContent = p.sentence || '—';
+    document.getElementById('dos-verdict-date-text').textContent = p.verdict_date || '—';
+  } else {
+    recordBlock.style.display = 'none';
+  }
 
   // KPI tiles
   const kpiRow = document.getElementById('dos-kpi-row');
