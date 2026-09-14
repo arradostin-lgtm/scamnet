@@ -2468,7 +2468,15 @@ function showResult(data, photoUrl) {
     bd.db_match || 0, 60
   ));
   if ((data.crowdsource?.unique_sessions || 0) > 1) {
-    rows.push(_arow('ℹ', t('analysis.crowdsource').replace('{n}', data.crowdsource.unique_sessions), '#f59e0b', bd.crowdsource || 0, 25));
+    const _topReason = (() => {
+      const r = data.crowdsource?.reasons || {};
+      const top = Object.entries(r).sort((a,b)=>b[1]-a[1])[0];
+      if (!top) return '';
+      const _rm = {money:{en:'asking for money',ru:'просит деньги'},investment:{en:'investment offer',ru:'инвест. предложение'},romance:{en:'romance',ru:'романтика'},job:{en:'job offer',ru:'работа'},goods:{en:'selling goods',ru:'продажа товаров'},other:{en:'other',ru:'другое'}};
+      const m = _rm[top[0]];
+      return m ? ` · ${_lang==='en'?m.en:m.ru} ×${top[1]}` : '';
+    })();
+    rows.push(_arow('ℹ', t('analysis.crowdsource').replace('{n}', data.crowdsource.unique_sessions) + _topReason, '#f59e0b', bd.crowdsource || 0, 25));
   }
   if (bd.reports > 0) {
     rows.push(_arow('⚑', t('analysis.reports'), '#f97316', bd.reports || 0, 20));
@@ -2591,6 +2599,37 @@ function showResult(data, photoUrl) {
     _intelCard('dos-exif', t('intel.exif'), exifRows.join(''));
   } else {
     _intelCard('dos-exif', null, null);
+  }
+
+  // Check reasons (crowdsource signal)
+  const reasons = data.crowdsource?.reasons || {};
+  const reasonEntries = Object.entries(reasons).filter(([, cnt]) => cnt > 0);
+  if (reasonEntries.length > 0) {
+    const _reasonMeta = {
+      money:      { emoji:'💸', en:'Asking for money',       ru:'Просит деньги' },
+      investment: { emoji:'📈', en:'Investment offer',        ru:'Предлагает инвестиции' },
+      romance:    { emoji:'💔', en:'Romantic relationship',   ru:'Романтика / знакомства' },
+      job:        { emoji:'💼', en:'Job offer',               ru:'Предложение работы' },
+      goods:      { emoji:'📦', en:'Selling goods/services',  ru:'Продажа товаров/услуг' },
+      other:      { emoji:'🔍', en:'Other',                   ru:'Другое' },
+    };
+    const isEn = _lang === 'en';
+    const reasonHtml = reasonEntries
+      .sort((a, b) => b[1] - a[1])
+      .map(([key, cnt]) => {
+        const m = _reasonMeta[key] || { emoji:'🔍', en:key, ru:key };
+        const lbl = isEn ? m.en : m.ru;
+        const chk = isEn
+          ? (cnt === 1 ? 'check' : 'checks')
+          : (cnt === 1 ? 'проверка' : cnt < 5 ? 'проверки' : 'проверок');
+        return `<div class="dos-intel-row">
+          <span class="dos-intel-label">${m.emoji} ${lbl}</span>
+          <span class="dos-intel-val">${cnt} ${chk}</span>
+        </div>`;
+      }).join('');
+    _intelCard('dos-reasons', isEn ? '👥 WHY PEOPLE CHECKED' : '👥 ПРИЧИНЫ ПРОВЕРОК', reasonHtml);
+  } else {
+    _intelCard('dos-reasons', null, null);
   }
 
   // Complaint bar
