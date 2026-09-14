@@ -875,7 +875,7 @@ footer{padding-block:38px;}
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           </div>
           <div class="aud-t">Офлайн-знакомства · Клубы и бары</div>
-          <p class="aud-p">Познакомились в клубе, баре или на вечеринке? Незаметно сфотографируй нового знакомого — и через 30 секунд узнаешь, были ли на него жалобы. Защита от консуматорш, альфонсов и профессиональных «охотников».</p>
+          <p class="aud-p">Познакомились в клубе, баре или на вечеринке? Незаметно сфотографируй нового знакомого — и через 30 секунд увидишь, сколько людей его уже проверяли и по каким причинам. Решать тебе.</p>
           <div class="aud-tags"><span class="aud-tag">Клубы / бары</span><span class="aud-tag">Консуматорши</span><span class="aud-tag">Альфонсы</span><span class="aud-tag">Офлайн-свидания</span></div>
         </div>
       </div>
@@ -891,7 +891,7 @@ footer{padding-block:38px;}
         <div class="cap-card">
           <div class="cap-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-3.5-3.5"/><circle cx="11" cy="11" r="3"/></svg></div>
           <div class="cap-t">Проверка по базе лиц</div>
-          <p class="cap-p">Сравниваем фото с биометрической базой подтверждённых мошенников. Учитываем, сколько разных людей уже проверяли это лицо — чем больше, тем выше риск.</p>
+          <p class="cap-p">Если лицо есть в официальной базе — статус подтверждён. Если нет — показываем, сколько людей уже проверяли этот профиль и по каким причинам: просьба денег, инвестиционное предложение, фейковая вакансия.</p>
         </div>
         <div class="cap-card">
           <div class="cap-icon violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
@@ -978,15 +978,15 @@ footer{padding-block:38px;}
   <section class="sec">
     <div class="wrap">
       <div class="sec-ey">Уникальный сигнал</div>
-      <h2 class="h2">Даже без совпадения с базой<br>мы видим подозрительных</h2>
-      <p class="sec-sub">Если одно лицо проверяют несколько независимых людей — это само по себе тревожный сигнал. Мошенники используют одну личность, чтобы обмануть многих.</p>
+      <h2 class="h2">Платформы не говорят друг с другом.<br>Но пользователи — говорят.</h2>
+      <p class="sec-sub">Один и тот же человек под фейковым профилем может предлагать инвестиции в Facebook и строить романтику на сайте знакомств. Официальные базы это не увидят — они разобщены. Но если несколько пользователей Scamnet проверяли одно лицо с разных платформ, указывая разные причины, мы показываем этот паттерн. Обвинять или нет — решаешь ты.</p>
       <div class="mechanic-box">
-        <div class="mech-head"><div class="sec-ey">Уровни риска</div><p class="mech-desc">Число людей, проверивших это лицо — ключевой индикатор</p></div>
+        <div class="mech-head"><div class="sec-ey">Сигнал жалоб</div><p class="mech-desc">Сколько людей проверяли это лицо и зачем — косвенный сигнал, не приговор</p></div>
         <div class="risk-rows">
-          <div class="risk-row"><div class="risk-tag safe">Чист</div><div class="risk-track"><div class="risk-fill safe"></div></div><div class="risk-count">0–1 проверки</div></div>
-          <div class="risk-row"><div class="risk-tag warn">Предупреждение</div><div class="risk-track"><div class="risk-fill warn"></div></div><div class="risk-count">2–4 проверки</div></div>
-          <div class="risk-row"><div class="risk-tag danger">Высокий риск</div><div class="risk-track"><div class="risk-fill danger"></div></div><div class="risk-count">5+ проверок</div></div>
-          <div class="risk-row"><div class="risk-tag danger">В базе</div><div class="risk-track"><div class="risk-fill full"></div></div><div class="risk-count">Подтверждён жертвами</div></div>
+          <div class="risk-row"><div class="risk-tag safe">Чисто</div><div class="risk-track"><div class="risk-fill safe"></div></div><div class="risk-count">0–1 проверки</div></div>
+          <div class="risk-row"><div class="risk-tag warn">Есть жалобы</div><div class="risk-track"><div class="risk-fill warn"></div></div><div class="risk-count">2–4 проверки</div></div>
+          <div class="risk-row"><div class="risk-tag danger">Много жалоб</div><div class="risk-track"><div class="risk-fill danger"></div></div><div class="risk-count">5+ проверок</div></div>
+          <div class="risk-row"><div class="risk-tag danger">В официальной базе</div><div class="risk-track"><div class="risk-fill full"></div></div><div class="risk-count">Статус подтверждён официально</div></div>
         </div>
       </div>
     </div>
@@ -995,8 +995,8 @@ footer{padding-block:38px;}
   <section class="sec">
     <div class="wrap">
       <div class="sec-ey">Типы угроз</div>
-      <h2 class="h2">Кого мы ловим</h2>
-      <p class="sec-sub">База охватывает разные схемы мошенничества с одной общей чертой — фиктивная личность.</p>
+      <h2 class="h2">Типичные схемы обмана</h2>
+      <p class="sec-sub">Мы фиксируем причины, по которым люди проверяют собеседников. Чаще всего это совпадает с известными схемами обмана — сравни и реши сам.</p>
       <div class="threats">
         <div class="t-card"><div class="t-tag red">Высокий риск</div><div class="t-title">Брачный аферист</div><p class="t-text">Выстраивает романтические отношения онлайн месяцами, затем просит деньги на «экстренные обстоятельства» или совместные вложения.</p></div>
         <div class="t-card"><div class="t-tag red">Высокий риск</div><div class="t-title">Романтический мошенник</div><p class="t-text">Использует украденные или ИИ-сгенерированные фото привлекательных людей. Удерживает жертву в переписке неделями.</p></div>
@@ -1015,7 +1015,7 @@ footer{padding-block:38px;}
     <div class="wrap">
       <div class="sec-ey">Личный кабинет · Пример результата</div>
       <h2 class="h2">Что видит подписчик<br>после проверки</h2>
-      <p class="sec-sub">После загрузки фото система формирует досье: реальная личность за псевдонимом, платформы, уголовная история и масштаб ущерба — всё в одном отчёте.</p>
+      <p class="sec-sub">После проверки: если человек есть в официальной базе — видите подтверждённый статус. Если нет — показываем, сколько людей его проверяли и по каким причинам. Выводы за вами.</p>
       <div class="dos-window">
         <div class="dos-chrome">
           <div class="dos-chrome-dots"><span></span><span></span><span></span></div>
@@ -1718,7 +1718,7 @@ const LANG = {
     hero: {
       eyebrow:'Anti-fraud verification · Worldwide',
       h1:'Is he<br><em>real?</em>',
-      sub:'Upload a photo or voice recording of your contact — from any country. Scamnet checks against scammer databases, detects AI generation, verifies voice and company reputation in 30 seconds.',
+      sub:'Upload a photo of your contact. Scamnet checks official scammer records and shows how many people have already looked up this face — and why: money requests, investment offers, fake jobs. You decide what to make of it.',
       hint1:'Works in 190+ countries', hint2:'Anonymous check', hint3:'No data stored',
     },
     upload: {
@@ -1813,7 +1813,7 @@ const LANG = {
     hero: {
       eyebrow:'Антифрод-верификация · Весь мир',
       h1:'Он<br><em>настоящий?</em>',
-      sub:'Загрузи фото или голос собеседника — из любой страны. Scamnet сравнит с базой мошенников, определит ИИ-генерацию, проверит голос и репутацию компании за 30 секунд.',
+      sub:'Загрузи фото собеседника. Scamnet покажет: есть ли он в официальной базе мошенников, сколько людей его уже проверяли и зачем — просил деньги, предлагал инвестиции, звал на работу. Делать выводы — тебе.',
       hint1:'Работает в 190+ странах', hint2:'Анонимная проверка', hint3:'Данные не сохраняются',
     },
     upload: {
