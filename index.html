@@ -451,6 +451,14 @@ body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;c
 .rtype-btn{padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--text-2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:8px;}
 .rtype-btn:hover{border-color:var(--text-3);color:var(--text);}
 .rtype-btn.sel{border-color:var(--danger);background:var(--danger-bg);color:var(--danger);}
+.check-reason-block{margin:0 0 14px;padding:14px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;}
+.check-reason-label{font-size:12px;font-weight:600;color:var(--text-2);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.check-reason-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.reason-btn{padding:9px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--text-2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:7px;line-height:1.3;}
+.reason-btn:hover{border-color:var(--accent-br);color:var(--text);}
+.reason-btn.sel{border-color:var(--accent-br);background:var(--accent-bg);color:var(--accent-br);}
+.reason-btn.sel .reason-emoji{filter:none;}
+@media(max-width:480px){.check-reason-grid{grid-template-columns:1fr;}}
 .rphoto-drop{border:2px dashed var(--border);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;}
 .rphoto-drop:hover,.rphoto-drop.drag{border-color:var(--accent-br);background:var(--accent-bg);}
 .rphoto-preview{width:80px;height:80px;border-radius:10px;object-fit:cover;margin-inline:auto;display:none;}
@@ -793,6 +801,20 @@ footer{padding-block:38px;}
             <div class="ctx-field">
               <label for="ctx-email">Email</label>
               <input type="email" id="ctx-email" data-i18n-ph="form.email_ph" placeholder="email мошенника (необязательно)">
+            </div>
+            <div id="check-reason-block" class="check-reason-block" style="display:none;grid-column:1/-1;">
+              <div class="check-reason-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                <span data-i18n="form.reason_label">Зачем проверяете?</span>
+              </div>
+              <div class="check-reason-grid">
+                <button type="button" class="reason-btn" data-reason="money" onclick="selectCheckReason(this)"><span class="reason-emoji">💸</span><span data-i18n="form.reason_money">Просит деньги</span></button>
+                <button type="button" class="reason-btn" data-reason="investment" onclick="selectCheckReason(this)"><span class="reason-emoji">📈</span><span data-i18n="form.reason_investment">Предлагает инвестиции</span></button>
+                <button type="button" class="reason-btn" data-reason="romance" onclick="selectCheckReason(this)"><span class="reason-emoji">💔</span><span data-i18n="form.reason_romance">Романтические отношения</span></button>
+                <button type="button" class="reason-btn" data-reason="job" onclick="selectCheckReason(this)"><span class="reason-emoji">💼</span><span data-i18n="form.reason_job">Предложение работы</span></button>
+                <button type="button" class="reason-btn" data-reason="goods" onclick="selectCheckReason(this)"><span class="reason-emoji">📦</span><span data-i18n="form.reason_goods">Продажа товаров/услуг</span></button>
+                <button type="button" class="reason-btn" data-reason="other" onclick="selectCheckReason(this)"><span class="reason-emoji">🔍</span><span data-i18n="form.reason_other">Другое</span></button>
+              </div>
             </div>
             <div class="ctx-hint" data-i18n="form.required_note">* Поля обязательны для запуска поиска</div>
           </div>
@@ -1735,6 +1757,10 @@ const LANG = {
       platform_label:'Dating site / app', platform_ph:'— choose —',
       met_live:'Met in person', met_other:'Other',
       username_label:'Username / handle', username_ph:'@handle (optional)',
+      reason_label:'Why are you checking?',
+      reason_money:'Asking for money', reason_investment:'Investment offer',
+      reason_romance:'Romantic relationship', reason_job:'Job offer',
+      reason_goods:'Selling goods / services', reason_other:'Other',
       company_label:'Company', company_ph:'Where they work (optional)',
       phone_label:'Phone', phone_ph:'+1 999 123 4567 (optional)',
       email_ph:'scammer email (optional)',
@@ -1830,6 +1856,10 @@ const LANG = {
       platform_label:'Сайт знакомства', platform_ph:'— выбери —',
       met_live:'Знакомство вживую', met_other:'Другое',
       username_label:'Ник / username', username_ph:'@handle (необязательно)',
+      reason_label:'Зачем проверяете?',
+      reason_money:'Просит деньги', reason_investment:'Предлагает инвестиции',
+      reason_romance:'Романтические отношения', reason_job:'Предложение работы',
+      reason_goods:'Продажа товаров/услуг', reason_other:'Другое',
       company_label:'Компания', company_ph:'Где работает (необязательно)',
       phone_label:'Телефон', phone_ph:'+7 999 123 45 67 (необязательно)',
       email_ph:'email мошенника (необязательно)',
@@ -1988,6 +2018,8 @@ function showLoggedIn(user) {
   }
   const fab = document.getElementById('fab-reg');
   if (fab) fab.style.display = 'none';
+  const reasonBlock = document.getElementById('check-reason-block');
+  if (reasonBlock) reasonBlock.style.display = 'block';
 
   document.getElementById('pd-name').textContent = user.name || t('pd_name_default');
   document.getElementById('pd-email').textContent = user.email;
@@ -2048,6 +2080,13 @@ document.getElementById('btn-google-login').addEventListener('click', function()
     if (nodes[2]) nodes[2].textContent = s.total_users.toLocaleString(_lang);
   } catch(e) {}
 })();
+
+let _checkReason = null;
+function selectCheckReason(btn) {
+  document.querySelectorAll('.reason-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  _checkReason = btn.dataset.reason;
+}
 
 // ── Clear invalid state on ctx fields when user edits them ───────────────────
 ['ctx-name','ctx-country','ctx-platform','ctx-username','ctx-company'].forEach(id => {
@@ -2118,6 +2157,7 @@ async function checkPhoto(file) {
     if (ctxCompany)  form.append('company', ctxCompany);
     if (ctxPhone)    form.append('phone', ctxPhone);
     if (ctxEmail)    form.append('email', ctxEmail);
+    if (_checkReason) form.append('check_reason', _checkReason);
     const headers = {'Authorization': 'Bearer ' + getToken()};
     const r = await fetch(API + '/check/face', { method: 'POST', headers, body: form });
     if (!r.ok) {
