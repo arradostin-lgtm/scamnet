@@ -1827,20 +1827,33 @@ function showResult(data, photoUrl) {
   arc.setAttribute('stroke', lv.ringColor);
   arc.setAttribute('stroke-dasharray', filled + ' ' + (circ - filled));
 
-  // Name & meta
+  // Name & meta — prefer DB, then vision extraction from photo
+  const vi = data.vision_info || {};
   let displayName = 'Неизвестно';
   if (data.match_source === 'profile') {
     displayName = p.known_as || p.real_name || 'Неизвестно';
   } else if (data.match_source === 'reported') {
     displayName = p.known_name || 'Неизвестно';
+  } else if (vi.name) {
+    displayName = vi.name; // name read from badge/caption in photo
   }
-  document.getElementById('dos-name').textContent = displayName;
+  const nameEl = document.getElementById('dos-name');
+  nameEl.textContent = displayName;
+  if (vi.name && !data.match_found) {
+    nameEl.title = 'Имя прочитано с фото (бейдж / подпись)';
+    nameEl.style.borderBottom = '1px dashed #3d5a75';
+  } else {
+    nameEl.title = '';
+    nameEl.style.borderBottom = '';
+  }
 
   const metaParts = [];
   if (p.nationality) metaParts.push(p.nationality);
   if (p.current_status) metaParts.push(_statusLabel(p.current_status));
   if (p.dob) metaParts.push('д.р. ' + p.dob);
   if (data.match_source === 'reported' && p.platform) metaParts.push('платформа: ' + p.platform);
+  if (vi.company && !data.match_found) metaParts.push(vi.company);
+  if (vi.notes && !data.match_found) metaParts.push(vi.notes);
   document.getElementById('dos-meta').textContent = metaParts.join(' · ');
 
   // ID grid (настоящее имя / статус / гражданство / дата приговора)
@@ -1949,12 +1962,13 @@ function showResult(data, photoUrl) {
   document.getElementById('dos-osint-count').textContent =
     osintCount > 0 ? osintCount + ' НАЙДЕНО' : 'ПОИСК ЗАВЕРШЁН';
 
-  // If Yandex recognised a name, surface it as a hint
+  // If Yandex recognised a name and vision didn't find one, surface it
   const entities = data.osint_entities || [];
-  if (entities.length && !data.match_found) {
+  if (entities.length && !data.match_found && !vi.name) {
     const hint = document.getElementById('dos-name');
     hint.textContent = entities[0];
     hint.title = 'Предположительное имя — обратный поиск по фото';
+    hint.style.borderBottom = '1px dashed #3d5a75';
   }
 
   // Social profiles
