@@ -560,6 +560,20 @@ body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;c
 .dos-mention-link{font-size:10px;color:#3B82F6;text-decoration:none;opacity:.7;white-space:nowrap;flex-shrink:0;padding-top:3px;}
 .dos-mention-link:hover{opacity:1;}
 .dos-osint-empty{font-family:'DM Mono',monospace;font-size:11px;color:#3d5a75;text-align:center;padding:12px 0;}
+.dos-intel-card{background:#060e18;border:1px solid #1e2d3d;border-radius:10px;padding:12px 16px;margin-top:8px;}
+.dos-intel-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#3d5a75;margin-bottom:9px;}
+.dos-intel-body{display:flex;flex-direction:column;gap:4px;}
+.dos-intel-row{display:flex;align-items:baseline;gap:8px;font-size:12px;padding:3px 0;border-bottom:1px solid #0f1a28;}
+.dos-intel-row:last-child{border-bottom:none;}
+.dos-intel-label{font-family:'DM Mono',monospace;font-size:10px;color:#3d5a75;white-space:nowrap;flex-shrink:0;}
+.dos-intel-val{color:#b8ccd8;flex:1;word-break:break-all;}
+.dos-intel-val a{color:#60a5fa;text-decoration:none;}
+.dos-intel-val a:hover{text-decoration:underline;}
+.dos-intel-danger .dos-intel-label{color:#f87171;}
+.dos-intel-danger .dos-intel-val{color:#fca5a5;}
+.dos-intel-warn .dos-intel-label{color:#fbbf24;}
+.dos-intel-warn .dos-intel-val{color:#fde68a;}
+.dos-badge-warn{display:inline-block;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.3);color:#fb923c;margin-left:4px;}
 .dos-source-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
 .dos-src-tag{display:inline-flex;align-items:center;gap:4px;font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.5px;padding:2px 8px;border-radius:3px;text-transform:uppercase;}
 .dos-src-tag.court{background:rgba(52,211,153,.1);color:#34d399;border:1px solid rgba(52,211,153,.2);}
@@ -764,6 +778,14 @@ footer{padding-block:38px;}
             <div class="ctx-field">
               <label for="ctx-company">Компания</label>
               <input type="text" id="ctx-company" placeholder="Где работает (необязательно)">
+            </div>
+            <div class="ctx-field">
+              <label for="ctx-phone">Телефон</label>
+              <input type="tel" id="ctx-phone" placeholder="+7 999 123 45 67 (необязательно)">
+            </div>
+            <div class="ctx-field">
+              <label for="ctx-email">Email</label>
+              <input type="email" id="ctx-email" placeholder="email мошенника (необязательно)">
             </div>
             <div class="ctx-hint">* Поля обязательны для запуска поиска</div>
           </div>
@@ -1826,6 +1848,8 @@ async function checkPhoto(file) {
     const ctxPlatform = document.getElementById('ctx-platform')?.value.trim();
     const ctxUsername = document.getElementById('ctx-username')?.value.trim();
     const ctxCompany  = document.getElementById('ctx-company')?.value.trim();
+    const ctxPhone    = document.getElementById('ctx-phone')?.value.trim();
+    const ctxEmail    = document.getElementById('ctx-email')?.value.trim();
 
     // Validate required fields
     let valid = true;
@@ -1851,6 +1875,8 @@ async function checkPhoto(file) {
     if (ctxPlatform) form.append('platform_met', ctxPlatform);
     if (ctxUsername) form.append('username', ctxUsername);
     if (ctxCompany)  form.append('company', ctxCompany);
+    if (ctxPhone)    form.append('phone', ctxPhone);
+    if (ctxEmail)    form.append('email', ctxEmail);
     const headers = {'Authorization': 'Bearer ' + getToken()};
     const r = await fetch(API + '/check/face', { method: 'POST', headers, body: form });
     if (!r.ok) {
@@ -2162,6 +2188,94 @@ function showResult(data, photoUrl) {
   }
   document.getElementById('dos-analysis-rows').innerHTML = rows.join('');
 
+  // ── Extended intelligence blocks ─────────────────────────────────────────────
+  // Render or remove a dynamic intel card below the analysis rows
+  function _intelCard(id, title, html) {
+    let el = document.getElementById(id);
+    if (!html) { if (el) el.remove(); return; }
+    if (!el) {
+      el = document.createElement('div');
+      el.id = id;
+      el.className = 'dos-intel-card';
+      document.getElementById('dos-analysis-rows').parentNode.appendChild(el);
+    }
+    el.innerHTML = `<div class="dos-intel-title">${title}</div><div class="dos-intel-body">${html}</div>`;
+  }
+
+  // Sanctions
+  const sanctions = data.sanctions || [];
+  if (sanctions.length) {
+    const sanctionHtml = sanctions.map(s => `<div class="dos-intel-row dos-intel-danger">
+      <span class="dos-intel-label">⚠ ${s.name || 'Неизвестно'}</span>
+      <span class="dos-intel-val">${[s.dataset, s.country].filter(Boolean).join(' · ') || ''}</span>
+    </div>`).join('');
+    _intelCard('dos-sanctions', '🚫 САНКЦИОННЫЕ СПИСКИ', sanctionHtml);
+  } else {
+    _intelCard('dos-sanctions', null, null);
+  }
+
+  // Phone info
+  const pi = data.phone_info;
+  if (pi) {
+    const voipWarn = pi.line_type === 'voip' ? ' <span class="dos-badge-warn">VoIP ⚠</span>' : '';
+    const phoneHtml = `<div class="dos-intel-row">
+      <span class="dos-intel-label">Номер</span><span class="dos-intel-val">${pi.international_format || pi.number || '—'}</span>
+    </div>
+    <div class="dos-intel-row">
+      <span class="dos-intel-label">Тип линии</span><span class="dos-intel-val">${pi.line_type || '—'}${voipWarn}</span>
+    </div>
+    <div class="dos-intel-row">
+      <span class="dos-intel-label">Оператор</span><span class="dos-intel-val">${pi.carrier || '—'}</span>
+    </div>
+    <div class="dos-intel-row">
+      <span class="dos-intel-label">Страна</span><span class="dos-intel-val">${pi.country_name || pi.country_code || '—'}</span>
+    </div>`;
+    _intelCard('dos-phone', '📞 ТЕЛЕФОН', phoneHtml);
+  } else {
+    _intelCard('dos-phone', null, null);
+  }
+
+  // Telegram
+  const tg = data.telegram;
+  if (tg && tg.exists) {
+    const tgHtml = `<div class="dos-intel-row">
+      <span class="dos-intel-label">Username</span>
+      <span class="dos-intel-val">${tg.url ? `<a href="${tg.url}" target="_blank" rel="noopener">${tg.username || tg.url}</a>` : (tg.username || '—')}</span>
+    </div>
+    ${tg.title ? `<div class="dos-intel-row"><span class="dos-intel-label">Имя в Telegram</span><span class="dos-intel-val">${tg.title}</span></div>` : ''}`;
+    _intelCard('dos-telegram', '✈️ TELEGRAM ПОДТВЕРЖДЁН', tgHtml);
+  } else {
+    _intelCard('dos-telegram', null, null);
+  }
+
+  // Email breaches
+  const breaches = data.email_breaches || [];
+  if (breaches.length) {
+    const breachHtml = breaches.map(b => `<div class="dos-intel-row">
+      <span class="dos-intel-label">💧 ${b.Name || b}</span>
+      <span class="dos-intel-val">${b.BreachDate || ''}</span>
+    </div>`).join('');
+    _intelCard('dos-breaches', `📧 УТЕЧКИ EMAIL (${breaches.length})`, breachHtml);
+  } else {
+    _intelCard('dos-breaches', null, null);
+  }
+
+  // EXIF risk signals
+  const exif = data.exif || {};
+  const exifSignals = exif.risk_signals || [];
+  if (exifSignals.length || exif.has_exif) {
+    const exifRows = [];
+    if (exif.has_exif) {
+      if (exif.camera_make || exif.camera_model) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">Камера</span><span class="dos-intel-val">${[exif.camera_make, exif.camera_model].filter(Boolean).join(' ')}</span></div>`);
+      if (exif.software) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">ПО</span><span class="dos-intel-val">${exif.software}</span></div>`);
+      if (exif.date_taken) exifRows.push(`<div class="dos-intel-row"><span class="dos-intel-label">Дата съёмки</span><span class="dos-intel-val">${exif.date_taken}</span></div>`);
+    }
+    exifSignals.forEach(s => exifRows.push(`<div class="dos-intel-row dos-intel-warn"><span class="dos-intel-label">⚠</span><span class="dos-intel-val">${s}</span></div>`));
+    _intelCard('dos-exif', '📷 EXIF МЕТАДАННЫЕ', exifRows.join(''));
+  } else {
+    _intelCard('dos-exif', null, null);
+  }
+
   // Complaint bar
   const cbar = document.getElementById('dos-complaint-bar');
   const totalComplaints = (p.report_count || 0) + (data.crowdsource?.unique_sessions || 0);
@@ -2248,22 +2362,33 @@ function _platformEmoji(name) {
   return '🔗';
 }
 
-// ── Check history (localStorage) ─────────────────────────────────────────────
+// ── Check history (localStorage, per-user) ───────────────────────────────────
+
+function _histKey() {
+  const t = getToken();
+  if (!t) return null;
+  // Namespace history by first 16 chars of token — different users on same device get separate histories
+  return 'sn_history_' + t.slice(0, 16);
+}
 
 function _saveHistory(entry) {
   try {
-    let hist = JSON.parse(localStorage.getItem('sn_history') || '[]');
+    const key = _histKey();
+    if (!key) return; // not authenticated — never save
+    let hist = JSON.parse(localStorage.getItem(key) || '[]');
     hist.unshift(entry);
     if (hist.length > 10) hist = hist.slice(0, 10);
-    localStorage.setItem('sn_history', JSON.stringify(hist));
+    localStorage.setItem(key, JSON.stringify(hist));
   } catch(e) {}
 }
 
 function renderHistory() {
+  const wrap = document.getElementById('history-wrap');
   try {
-    const hist = JSON.parse(localStorage.getItem('sn_history') || '[]');
-    if (!hist.length) return;
-    const wrap = document.getElementById('history-wrap');
+    const key = _histKey();
+    if (!key) { wrap.style.display = 'none'; return; } // hide for non-authenticated
+    const hist = JSON.parse(localStorage.getItem(key) || '[]');
+    if (!hist.length) { wrap.style.display = 'none'; return; }
     const list = document.getElementById('history-list');
     wrap.style.display = 'block';
     const VERDLABEL = { clean:'Чисто', warning:'Осторожно', high:'Высокий риск', confirmed:'Мошенник' };
@@ -2282,12 +2407,14 @@ function renderHistory() {
         <div class="history-hbadge" style="background:${col}22;color:${col};border:1px solid ${col}44">${lbl}</div>
       </div>`;
     }).join('');
-  } catch(e) {}
+  } catch(e) { wrap.style.display = 'none'; }
 }
 
 function reopenHistory(idx) {
   try {
-    const hist = JSON.parse(localStorage.getItem('sn_history') || '[]');
+    const key = _histKey();
+    if (!key) return;
+    const hist = JSON.parse(localStorage.getItem(key) || '[]');
     if (hist[idx]) showResult(hist[idx].data);
   } catch(e) {}
 }
