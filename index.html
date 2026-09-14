@@ -451,6 +451,16 @@ body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;c
 .rtype-btn{padding:10px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);color:var(--text-2);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;text-align:left;transition:all .15s;display:flex;align-items:center;gap:8px;}
 .rtype-btn:hover{border-color:var(--text-3);color:var(--text);}
 .rtype-btn.sel{border-color:var(--danger);background:var(--danger-bg);color:var(--danger);}
+.upload-gate{padding:28px 24px;text-align:center;}
+.upload-gate-title{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.upload-gate-sub{font-size:13px;color:var(--text-2);margin-bottom:22px;line-height:1.5;}
+.upload-gate-perks{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;text-align:left;}
+.upload-gate-perk{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;}
+.upload-gate-perk-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.upload-gate-perk-t{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;}
+.upload-gate-perk-d{font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.4;}
+.upload-gate-btn{width:100%;padding:13px;border-radius:12px;border:none;background:var(--accent-br);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:opacity .15s;}
+.upload-gate-btn:hover{opacity:.88;}
 .check-reason-block{margin:0 0 14px;padding:14px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;}
 .check-reason-label{font-size:12px;font-weight:600;color:var(--text-2);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
 .check-reason-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
@@ -738,6 +748,32 @@ footer{padding-block:38px;}
     </div>
     <div>
       <div class="upload-wrap">
+
+        <!-- Gate: shown to non-auth users -->
+        <div id="upload-gate" class="upload-gate">
+          <div class="upload-gate-title" data-i18n="gate.title">Зарегистрируйся — проверь бесплатно</div>
+          <div class="upload-gate-sub" data-i18n="gate.sub">5 бесплатных проверок в месяц. Без карты.</div>
+          <div class="upload-gate-perks">
+            <div class="upload-gate-perk">
+              <div class="upload-gate-perk-icon" style="background:rgba(59,130,246,.12);color:#3b82f6;">🔍</div>
+              <div><div class="upload-gate-perk-t" data-i18n="gate.perk1_t">Официальная база мошенников</div><div class="upload-gate-perk-d" data-i18n="gate.perk1_d">Биометрическое сравнение с подтверждёнными профилями</div></div>
+            </div>
+            <div class="upload-gate-perk">
+              <div class="upload-gate-perk-icon" style="background:rgba(232,131,16,.12);color:var(--accent-br);">👥</div>
+              <div><div class="upload-gate-perk-t" data-i18n="gate.perk2_t">Краудсорс-сигнал</div><div class="upload-gate-perk-d" data-i18n="gate.perk2_d">Сколько людей уже проверяли это лицо и зачем</div></div>
+            </div>
+            <div class="upload-gate-perk">
+              <div class="upload-gate-perk-icon" style="background:rgba(139,92,246,.12);color:#8b5cf6;">🤖</div>
+              <div><div class="upload-gate-perk-t" data-i18n="gate.perk3_t">Детектор ИИ-фото</div><div class="upload-gate-perk-d" data-i18n="gate.perk3_d">Определяем Midjourney, DALL-E, StyleGAN и дипфейки</div></div>
+            </div>
+          </div>
+          <button class="upload-gate-btn" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">
+            <span data-i18n="gate.cta">Начать бесплатно →</span>
+          </button>
+        </div>
+
+        <!-- Upload widget: shown only to authenticated users -->
+        <div id="upload-widget" style="display:none;">
         <div class="utabs">
           <button class="utab active" data-tab="photo" type="button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
@@ -840,6 +876,7 @@ footer{padding-block:38px;}
             <span data-i18n="upload.voice_note"><strong>Рекомендуется запись живого очного общения</strong> — не менее 10 секунд.</span>
           </div>
         </div>
+        </div><!-- /upload-widget -->
       </div>
     </div>
   </div>
@@ -1751,6 +1788,14 @@ const LANG = {
       voice_btn:'Choose recording',
       voice_note:'<strong>Live in-person recording recommended</strong> — at least 10 seconds.',
     },
+    gate: {
+      title:'Sign up — check for free',
+      sub:'5 free checks per month. No card required.',
+      perk1_t:'Official scammer database', perk1_d:'Biometric match against verified profiles',
+      perk2_t:'Crowdsource signal', perk2_d:'How many people checked this face and why',
+      perk3_t:'AI photo detector', perk3_d:'Detects Midjourney, DALL-E, StyleGAN and deepfakes',
+      cta:'Get started free →',
+    },
     form: {
       name_label:'Name they gave you', name_ph:'Name or alias',
       country_label:'Country you met', country_ph:'e.g. United States',
@@ -1849,6 +1894,14 @@ const LANG = {
       voice_label:'Загрузи запись голоса', voice_sub:'MP3, WAV, OGG, M4A — от 10 секунд',
       voice_btn:'Выбрать запись',
       voice_note:'<strong>Рекомендуется запись живого очного общения</strong> — не менее 10 секунд.',
+    },
+    gate: {
+      title:'Зарегистрируйся — проверь бесплатно',
+      sub:'5 бесплатных проверок в месяц. Без карты.',
+      perk1_t:'Официальная база мошенников', perk1_d:'Биометрическое сравнение с подтверждёнными профилями',
+      perk2_t:'Краудсорс-сигнал', perk2_d:'Сколько людей уже проверяли это лицо и зачем',
+      perk3_t:'Детектор ИИ-фото', perk3_d:'Определяем Midjourney, DALL-E, StyleGAN и дипфейки',
+      cta:'Начать бесплатно →',
     },
     form: {
       name_label:'Как представился', name_ph:'Имя или псевдоним',
@@ -2018,6 +2071,10 @@ function showLoggedIn(user) {
   }
   const fab = document.getElementById('fab-reg');
   if (fab) fab.style.display = 'none';
+  const gate = document.getElementById('upload-gate');
+  if (gate) gate.style.display = 'none';
+  const widget = document.getElementById('upload-widget');
+  if (widget) widget.style.display = 'block';
   const reasonBlock = document.getElementById('check-reason-block');
   if (reasonBlock) reasonBlock.style.display = 'block';
 
