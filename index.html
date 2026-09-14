@@ -345,6 +345,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;c
 .story-link{font-size:12px;color:var(--accent-br);text-decoration:none;font-weight:500;}
 .story-link:hover{text-decoration:underline;}
 
+/* FAB — registration */
+.fab-reg{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;align-items:center;gap:8px;background:var(--accent-br);color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;padding:12px 20px 12px 16px;border-radius:50px;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(232,131,16,.45);transition:opacity .15s,transform .15s,box-shadow .15s;}
+.fab-reg:hover{opacity:.92;transform:translateY(-2px);box-shadow:0 8px 32px rgba(232,131,16,.5);}
+.fab-reg svg{flex-shrink:0;}
+@media(max-width:600px){.fab-reg .fab-label{display:none;}.fab-reg{padding:14px;border-radius:50%;}}
+
 /* REGISTRATION */
 .reg-sec{padding-block:80px;background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .reg-grid{display:grid;grid-template-columns:1fr 420px;gap:64px;align-items:center;}
@@ -1573,6 +1579,12 @@ footer{padding-block:38px;}
   </div>
 </footer>
 
+<!-- FAB: registration (hidden when logged in) -->
+<button class="fab-reg" id="fab-reg" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  <span class="fab-label" data-i18n="nav.register">Регистрация</span>
+</button>
+
 <!-- Result modal -->
 <div id="result-modal" class="dos-modal-overlay" onclick="if(event.target===this)closeDossier()">
   <div class="dos-card">
@@ -1974,6 +1986,9 @@ function showLoggedIn(user) {
     document.getElementById('pd-avatar').src = user.avatar_url;
     document.getElementById('sm-avatar').src = user.avatar_url;
   }
+  const fab = document.getElementById('fab-reg');
+  if (fab) fab.style.display = 'none';
+
   document.getElementById('pd-name').textContent = user.name || t('pd_name_default');
   document.getElementById('pd-email').textContent = user.email;
   document.getElementById('sm-name').textContent = user.name || t('pd_name_default');
