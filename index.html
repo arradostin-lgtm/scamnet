@@ -1908,21 +1908,32 @@ function showResult(data, photoUrl) {
   arc.setAttribute('stroke', lv.ringColor);
   arc.setAttribute('stroke-dasharray', filled + ' ' + (circ - filled));
 
-  // Name & meta — prefer DB, then vision extraction from photo
+  // Name & meta — prefer DB → vision (badge) → user-provided → "Неизвестно"
   const vi = data.vision_info || {};
+  const uc = data.user_context || {};
   let displayName = 'Неизвестно';
+  let nameSource = '';
   if (data.match_source === 'profile') {
     displayName = p.known_as || p.real_name || 'Неизвестно';
+    nameSource = 'db';
   } else if (data.match_source === 'reported') {
     displayName = p.known_name || 'Неизвестно';
+    nameSource = 'db';
   } else if (vi.name) {
-    displayName = vi.name; // name read from badge/caption in photo
+    displayName = vi.name;
+    nameSource = 'vision';
+  } else if (uc.known_name) {
+    displayName = uc.known_name;
+    nameSource = 'user';
   }
   const nameEl = document.getElementById('dos-name');
   nameEl.textContent = displayName;
-  if (vi.name && !data.match_found) {
+  if (nameSource === 'vision') {
     nameEl.title = 'Имя прочитано с фото (бейдж / подпись)';
     nameEl.style.borderBottom = '1px dashed #3d5a75';
+  } else if (nameSource === 'user') {
+    nameEl.title = 'Имя указано при загрузке';
+    nameEl.style.borderBottom = '1px dashed #4a6741';
   } else {
     nameEl.title = '';
     nameEl.style.borderBottom = '';
@@ -1930,10 +1941,13 @@ function showResult(data, photoUrl) {
 
   const metaParts = [];
   if (p.nationality) metaParts.push(p.nationality);
+  else if (uc.country) metaParts.push(uc.country);
   if (p.current_status) metaParts.push(_statusLabel(p.current_status));
   if (p.dob) metaParts.push('д.р. ' + p.dob);
-  if (data.match_source === 'reported' && p.platform) metaParts.push('платформа: ' + p.platform);
+  if (p.platform) metaParts.push('платформа: ' + p.platform);
+  else if (uc.platform_met) metaParts.push('познакомились: ' + uc.platform_met);
   if (vi.company && !data.match_found) metaParts.push(vi.company);
+  else if (uc.company && !data.match_found) metaParts.push(uc.company);
   if (vi.notes && !data.match_found) metaParts.push(vi.notes);
   document.getElementById('dos-meta').textContent = metaParts.join(' · ');
 
