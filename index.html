@@ -10,7 +10,8 @@
 <style>
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{overflow-x:hidden;}
 :root{
   --bg:#EEF3FA;--bg-2:#E3EAF5;--surface:#FFFFFF;--border:#C5D3E8;
   --text:#0C1A2E;--text-2:#3D567A;--text-3:#6B85A6;
@@ -672,6 +673,12 @@ footer{padding-block:38px;}
   .reg-form-card{padding:24px 20px;}
   .main-tab{padding:14px 18px;font-size:13px;}
 }
+@media(max-width:480px){
+  .ctx-fields{grid-template-columns:1fr;}
+  .nav-btn-primary{display:none;}
+  .wrap{padding-inline:16px;}
+  .check-reason-grid{grid-template-columns:1fr 1fr;}
+}
 
 </style>
 </head>
@@ -710,11 +717,11 @@ footer{padding-block:38px;}
 </div>
 
 <!-- Settings modal -->
-<div id="settings-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;">
+<div id="settings-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px;" onclick="if(event.target===this)closeSettingsModal()">
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:0;max-width:500px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.18);overflow:hidden;">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--border);">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);" data-i18n="nav.settings">Настройки профиля</div>
-      <button onclick="document.getElementById('settings-modal').style.display='none'" style="background:none;border:none;cursor:pointer;color:var(--text-3);font-size:22px;line-height:1;">×</button>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--text);" data-i18n="nav.settings">Аккаунт и тариф</div>
+      <button aria-label="Закрыть" onclick="closeSettingsModal()" style="background:none;border:none;cursor:pointer;color:var(--text-3);font-size:22px;line-height:1;">×</button>
     </div>
     <div style="padding:28px;">
       <div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:20px;">
@@ -796,6 +803,23 @@ footer{padding-block:38px;}
           <input type="file" id="file-input-photo" accept="image/*" style="display:none">
           <div class="u-note" data-i18n="upload.photo_drag">или перетащи сюда</div>
         </div>
+        <div class="upload hidden" id="zone-voice">
+          <div class="wave-icon">
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+          <div class="u-label" data-i18n="upload.voice_label">Загрузи запись голоса</div>
+          <div class="u-sub" data-i18n="upload.voice_sub">MP3, WAV, OGG, M4A — от 10 секунд</div>
+          <button class="btn" type="button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span data-i18n="upload.voice_btn">Выбрать запись</span>
+          </button>
+          <div class="voice-note">
+            <svg class="voice-note-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span data-i18n="upload.voice_note"><strong>Рекомендуется запись живого очного общения</strong> — не менее 10 секунд.</span>
+          </div>
+        </div>
         <div id="ctx-wrap" style="padding:0 4px 8px">
           <div class="ctx-fields" id="ctx-fields">
             <div class="ctx-field full">
@@ -803,11 +827,11 @@ footer{padding-block:38px;}
               <input type="text" id="ctx-name" data-i18n-ph="form.name_ph" placeholder="Имя или псевдоним">
             </div>
             <div class="ctx-field">
-              <label for="ctx-country"><span data-i18n="form.country_label">Страна знакомства</span> <span class="req">*</span></label>
+              <label for="ctx-country"><span data-i18n="form.country_label">Страна</span> <span class="req">*</span></label>
               <input type="text" id="ctx-country" data-i18n-ph="form.country_ph" placeholder="Например: Россия">
             </div>
             <div class="ctx-field">
-              <label for="ctx-platform"><span data-i18n="form.platform_label">Сайт знакомства</span> <span class="req">*</span></label>
+              <label for="ctx-platform"><span data-i18n="form.platform_label">Где познакомились</span> <span class="req">*</span></label>
               <select id="ctx-platform">
                 <option value="" data-i18n="form.platform_ph">— выбери —</option>
                 <option>Tinder</option>
@@ -836,7 +860,7 @@ footer{padding-block:38px;}
             </div>
             <div class="ctx-field">
               <label for="ctx-email">Email</label>
-              <input type="email" id="ctx-email" data-i18n-ph="form.email_ph" placeholder="email мошенника (необязательно)">
+              <input type="email" id="ctx-email" data-i18n-ph="form.email_ph" placeholder="email проверяемого (необязательно)">
             </div>
             <div id="check-reason-block" class="check-reason-block" style="display:none;grid-column:1/-1;">
               <div class="check-reason-label">
@@ -844,12 +868,12 @@ footer{padding-block:38px;}
                 <span data-i18n="form.reason_label">Зачем проверяете?</span>
               </div>
               <div class="check-reason-grid">
-                <button type="button" class="reason-btn" data-reason="money" onclick="selectCheckReason(this)"><span class="reason-emoji">💸</span><span data-i18n="form.reason_money">Просит деньги</span></button>
-                <button type="button" class="reason-btn" data-reason="investment" onclick="selectCheckReason(this)"><span class="reason-emoji">📈</span><span data-i18n="form.reason_investment">Предлагает инвестиции</span></button>
-                <button type="button" class="reason-btn" data-reason="romance" onclick="selectCheckReason(this)"><span class="reason-emoji">💔</span><span data-i18n="form.reason_romance">Романтические отношения</span></button>
-                <button type="button" class="reason-btn" data-reason="job" onclick="selectCheckReason(this)"><span class="reason-emoji">💼</span><span data-i18n="form.reason_job">Предложение работы</span></button>
-                <button type="button" class="reason-btn" data-reason="goods" onclick="selectCheckReason(this)"><span class="reason-emoji">📦</span><span data-i18n="form.reason_goods">Продажа товаров/услуг</span></button>
-                <button type="button" class="reason-btn" data-reason="other" onclick="selectCheckReason(this)"><span class="reason-emoji">🔍</span><span data-i18n="form.reason_other">Другое</span></button>
+                <button type="button" class="reason-btn" data-reason="money" aria-pressed="false" onclick="selectCheckReason(this)"><span class="reason-emoji">💸</span><span data-i18n="form.reason_money">Просит деньги</span></button>
+                <button type="button" class="reason-btn" data-reason="investment" aria-pressed="false" onclick="selectCheckReason(this)"><span class="reason-emoji">📈</span><span data-i18n="form.reason_investment">Предлагает инвестиции</span></button>
+                <button type="button" class="reason-btn" data-reason="romance" aria-pressed="false" onclick="selectCheckReason(this)"><span class="reason-emoji">💔</span><span data-i18n="form.reason_romance">Романтические отношения</span></button>
+                <button type="button" class="reason-btn" data-reason="job" aria-pressed="false" onclick="selectCheckReason(this)"><span class="reason-emoji">💼</span><span data-i18n="form.reason_job">Предложение работы</span></button>
+                <button type="button" class="reason-btn" data-reason="goods" aria-pressed="false" onclick="selectCheckReason(this)"><span class="reason-emoji">📦</span><span data-i18n="form.reason_goods">Продажа товаров/услуг</span></button>
+                <button type="button" class="reason-btn" data-reason="other" aria-pressed="false" onclick="selectCheckReason(this)"><span class="reason-emoji">🔍</span><span data-i18n="form.reason_other">Другое</span></button>
               </div>
             </div>
             <div class="ctx-hint" data-i18n="form.required_note">* Поля обязательны для запуска поиска</div>
@@ -858,23 +882,6 @@ footer{padding-block:38px;}
         <div id="history-wrap" class="history-wrap" style="display:none">
           <div class="history-title" data-i18n="history.title">История проверок</div>
           <div id="history-list" class="history-list"></div>
-        </div>
-        <div class="upload hidden" id="zone-voice">
-          <div class="wave-icon">
-            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-            <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-            <div class="wave-bar"></div>
-          </div>
-          <div class="u-label" data-i18n="upload.voice_label">Загрузи запись голоса</div>
-          <div class="u-sub" data-i18n="upload.voice_sub">MP3, WAV, OGG, M4A — от 10 секунд</div>
-          <button class="btn" type="button">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span data-i18n="upload.voice_btn">Выбрать запись</span>
-          </button>
-          <div class="voice-note">
-            <svg class="voice-note-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span data-i18n="upload.voice_note"><strong>Рекомендуется запись живого очного общения</strong> — не менее 10 секунд.</span>
-          </div>
         </div>
         </div><!-- /upload-widget -->
       </div>
@@ -1043,8 +1050,8 @@ footer{padding-block:38px;}
         <div class="mech-head"><div class="sec-ey">Сигнал жалоб</div><p class="mech-desc">Сколько людей проверяли это лицо и зачем — косвенный сигнал, не приговор</p></div>
         <div class="risk-rows">
           <div class="risk-row"><div class="risk-tag safe">Чисто</div><div class="risk-track"><div class="risk-fill safe"></div></div><div class="risk-count">0–1 проверки</div></div>
-          <div class="risk-row"><div class="risk-tag warn">Есть жалобы</div><div class="risk-track"><div class="risk-fill warn"></div></div><div class="risk-count">2–4 проверки</div></div>
-          <div class="risk-row"><div class="risk-tag danger">Много жалоб</div><div class="risk-track"><div class="risk-fill danger"></div></div><div class="risk-count">5+ проверок</div></div>
+          <div class="risk-row"><div class="risk-tag warn">Есть проверки</div><div class="risk-track"><div class="risk-fill warn"></div></div><div class="risk-count">2–4 проверки</div></div>
+          <div class="risk-row"><div class="risk-tag danger">Много проверок</div><div class="risk-track"><div class="risk-fill danger"></div></div><div class="risk-count">5+ проверок</div></div>
           <div class="risk-row"><div class="risk-tag danger">В официальной базе</div><div class="risk-track"><div class="risk-fill full"></div></div><div class="risk-count">Статус подтверждён официально</div></div>
         </div>
       </div>
@@ -1518,20 +1525,20 @@ footer{padding-block:38px;}
   <div class="rmodal">
     <div class="rmodal-head">
       <div class="rmodal-title">Сообщить о мошеннике</div>
-      <button class="rmodal-close" onclick="closeReportModal()">
+      <button class="rmodal-close" aria-label="Закрыть" onclick="closeReportModal()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <div class="rmodal-progress">
-      <div class="rprog-dot done" id="rprog1"></div>
-      <div class="rprog-dot" id="rprog2"></div>
-      <div class="rprog-dot" id="rprog3"></div>
+    <div class="rmodal-progress" role="progressbar" aria-label="Шаг 1 из 3" id="rmodal-progress-bar">
+      <div class="rprog-dot done" id="rprog1" title="Шаг 1: Фото"></div>
+      <div class="rprog-dot" id="rprog2" title="Шаг 2: Подробности"></div>
+      <div class="rprog-dot" id="rprog3" title="Шаг 3: Описание"></div>
     </div>
 
     <!-- Step 1: Photo + name -->
     <div class="rmodal-step active" id="rstep1">
       <div class="rfield">
-        <label>Фото мошенника *</label>
+        <label>Фото лица *</label>
         <div class="rphoto-drop" id="rPhotoDrop" onclick="document.getElementById('rPhotoInput').click()">
           <img id="rPhotoPreview" class="rphoto-preview" alt="">
           <div id="rPhotoPlaceholder">
@@ -1650,7 +1657,7 @@ footer{padding-block:38px;}
     <div class="dos-header">
       <div class="dos-eyebrow" data-i18n="modal.eyebrow">SCAMNET · АНАЛИЗ</div>
       <div id="dos-verdict" class="dos-verdict-badge dos-v-clean">ЧИСТО</div>
-      <button class="dos-close" onclick="closeDossier()">×</button>
+      <button class="dos-close" aria-label="Закрыть" onclick="closeDossier()">×</button>
     </div>
 
     <div id="dos-sources-wrap" style="display:none;padding:8px 22px 12px;border-bottom:1px solid #1e2d3d;background:#0a1520;">
@@ -1798,8 +1805,8 @@ const LANG = {
     },
     form: {
       name_label:'Name they gave you', name_ph:'Name or alias',
-      country_label:'Country you met', country_ph:'e.g. United States',
-      platform_label:'Dating site / app', platform_ph:'— choose —',
+      country_label:'Country', country_ph:'e.g. United States',
+      platform_label:'Where you met', platform_ph:'— choose —',
       met_live:'Met in person', met_other:'Other',
       username_label:'Username / handle', username_ph:'@handle (optional)',
       reason_label:'Why are you checking?',
@@ -1808,7 +1815,7 @@ const LANG = {
       reason_goods:'Selling goods / services', reason_other:'Other',
       company_label:'Company', company_ph:'Where they work (optional)',
       phone_label:'Phone', phone_ph:'+1 999 123 4567 (optional)',
-      email_ph:'scammer email (optional)',
+      email_ph:'email (optional)',
       required_note:'* Required fields to start the search',
     },
     history: { title:'Check history' },
@@ -1905,8 +1912,8 @@ const LANG = {
     },
     form: {
       name_label:'Как представился', name_ph:'Имя или псевдоним',
-      country_label:'Страна знакомства', country_ph:'Например: Россия',
-      platform_label:'Сайт знакомства', platform_ph:'— выбери —',
+      country_label:'Страна', country_ph:'Например: Россия',
+      platform_label:'Где познакомились', platform_ph:'— выбери —',
       met_live:'Знакомство вживую', met_other:'Другое',
       username_label:'Ник / username', username_ph:'@handle (необязательно)',
       reason_label:'Зачем проверяете?',
@@ -1915,7 +1922,7 @@ const LANG = {
       reason_goods:'Продажа товаров/услуг', reason_other:'Другое',
       company_label:'Компания', company_ph:'Где работает (необязательно)',
       phone_label:'Телефон', phone_ph:'+7 999 123 45 67 (необязательно)',
-      email_ph:'email мошенника (необязательно)',
+      email_ph:'email проверяемого (необязательно)',
       required_note:'* Поля обязательны для запуска поиска',
     },
     history: { title:'История проверок' },
@@ -2109,8 +2116,20 @@ function toggleProfileDropdown() {
 }
 function openSettings() {
   document.getElementById('profile-dropdown').style.display = 'none';
-  document.getElementById('settings-modal').style.display = 'flex';
+  const m = document.getElementById('settings-modal');
+  m.style.display = 'flex';
+  m.querySelector('button[aria-label="Закрыть"]')?.focus();
 }
+function closeSettingsModal() {
+  document.getElementById('settings-modal').style.display = 'none';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key !== 'Escape') return;
+  if (document.getElementById('settings-modal').style.display === 'flex') { closeSettingsModal(); return; }
+  const rm = document.getElementById('reportModal');
+  if (rm && rm.classList.contains('open')) { closeReportModal(); return; }
+  if (document.getElementById('result-modal').classList.contains('active')) { closeDossier(); }
+});
 document.addEventListener('click', function(e) {
   const dd = document.getElementById('profile-dropdown');
   if (dd && dd.style.display === 'block' && !dd.contains(e.target) && !e.target.closest('#nav-profile-btn')) {
@@ -2140,8 +2159,9 @@ document.getElementById('btn-google-login').addEventListener('click', function()
 
 let _checkReason = null;
 function selectCheckReason(btn) {
-  document.querySelectorAll('.reason-btn').forEach(b => b.classList.remove('sel'));
+  document.querySelectorAll('.reason-btn').forEach(b => { b.classList.remove('sel'); b.setAttribute('aria-pressed','false'); });
   btn.classList.add('sel');
+  btn.setAttribute('aria-pressed','true');
   _checkReason = btn.dataset.reason;
 }
 
