@@ -689,8 +689,8 @@ footer{padding-block:38px;}
     <a href="#" class="logo"><div class="logo-pulse"></div>SCAMNET</a>
     <div class="nav-actions" id="nav-actions">
       <button id="lang-switcher" class="nav-btn" type="button" onclick="applyLang(_lang==='ru'?'en':'ru')" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;min-width:36px;">EN</button>
-      <button class="nav-btn" data-i18n="nav.login" type="button" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">Войти</button>
-      <button class="nav-btn-primary" data-i18n="nav.register" type="button" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">Регистрация</button>
+      <button class="nav-btn" data-i18n="nav.login" type="button" onclick="loginWithGoogle()">Войти</button>
+      <button class="nav-btn-primary" data-i18n="nav.register" type="button" onclick="loginWithGoogle()">Регистрация</button>
     </div>
   </div>
 </nav>
@@ -774,7 +774,7 @@ footer{padding-block:38px;}
               <div><div class="upload-gate-perk-t" data-i18n="gate.perk3_t">Детектор ИИ-фото</div><div class="upload-gate-perk-d" data-i18n="gate.perk3_d">Определяем Midjourney, DALL-E, StyleGAN и дипфейки</div></div>
             </div>
           </div>
-          <button class="upload-gate-btn" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">
+          <button class="upload-gate-btn" onclick="loginWithGoogle()">
             <span data-i18n="gate.cta">Начать бесплатно →</span>
           </button>
         </div>
@@ -1339,116 +1339,6 @@ footer{padding-block:38px;}
   </section>
 </div><!-- /tab-stats -->
 
-<!-- REGISTRATION -->
-<section class="reg-sec" id="reg">
-  <div class="wrap">
-    <div class="reg-grid">
-      <div class="reg-copy">
-        <div class="reg-copy-ey">Начни сейчас</div>
-        <h2 class="reg-copy-h">Защити себя<br>за 30 секунд</h2>
-        <p class="reg-copy-p">5 бесплатных проверок каждый месяц — без карты, без обязательств. Просто создай аккаунт и начни проверять.</p>
-        <div class="reg-bullets">
-          <div class="reg-bullet">
-            <div class="reg-bullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div class="reg-bullet-t">5 бесплатных проверок в месяц</div><div class="reg-bullet-s">Навсегда, без ограничений по времени</div></div>
-          </div>
-          <div class="reg-bullet">
-            <div class="reg-bullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div class="reg-bullet-t">Проверка по фото и голосу</div><div class="reg-bullet-s">Детектор ИИ-изображений включён</div></div>
-          </div>
-          <div class="reg-bullet">
-            <div class="reg-bullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <div><div class="reg-bullet-t">Анонимно и безопасно</div><div class="reg-bullet-s">Загруженные данные не сохраняются</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="reg-form-card">
-        <div class="reg-form-h">Создать аккаунт</div>
-        <div class="reg-form-s">Присоединяйся к 9 300 защищённым пользователям</div>
-        <button class="btn-google" type="button" id="btn-google-login">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908C16.658 14.013 17.64 11.706 17.64 9.2z" fill="#4285F4"/>
-            <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
-            <path d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
-            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
-          </svg>
-          Войти через Google
-        </button>
-        <div class="or-divider"><span>или по email</span></div>
-        <div class="form-group">
-          <label class="form-label" for="reg-email">Email</label>
-          <input class="form-input" type="email" id="reg-email" placeholder="you@example.com" autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="reg-pass">Пароль</label>
-          <input class="form-input" type="password" id="reg-pass" placeholder="Минимум 8 символов" autocomplete="new-password">
-        </div>
-        <button class="btn-register" type="button">Зарегистрироваться бесплатно</button>
-        <div class="reg-terms">Регистрируясь, вы соглашаетесь с <a href="#">Условиями использования</a> и <a href="#">Политикой конфиденциальности</a></div>
-        <div class="reg-login-link">Уже есть аккаунт? <a href="#">Войти</a></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="sec" id="pricing">
-  <div class="wrap">
-    <div class="sec-ey">Тарифы</div>
-    <h2 class="h2">Выбери подходящий план</h2>
-    <p class="sec-sub">Начни бесплатно — 5 проверок в месяц без карты. Далее выбирай тариф под свои задачи.</p>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-badge" style="background:var(--safe-bg);color:var(--safe);">Бесплатно</div>
-        <div class="price-name">Базовый</div>
-        <div class="price-desc">Для личных проверок — знакомства, небольшая защита</div>
-        <div class="price-amount">0<span style="font-size:24px;letter-spacing:0;vertical-align:super;margin-left:2px">$</span></div>
-        <div class="price-period">в месяц, навсегда</div>
-        <ul class="price-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>5 проверок в месяц</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Проверка по фото</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Детектор ИИ-изображений</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Базовый отчёт</li>
-        </ul>
-        <button class="btn-price secondary" type="button">Начать бесплатно</button>
-        <div class="price-note">Без привязки карты, без ограничений по времени</div>
-      </div>
-      <div class="price-card featured">
-        <div class="price-badge">Популярный</div>
-        <div class="price-name">Стандарт</div>
-        <div class="price-desc">Для активной защиты — частые знакомства, деловая активность</div>
-        <div class="price-amount"><span>$</span>19<span style="font-size:28px">.99</span></div>
-        <div class="price-period">в месяц</div>
-        <ul class="price-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>100 проверок в месяц</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Проверка по фото и голосу</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Детектор ИИ-изображений</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Расширенный отчёт с историей</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Уведомления при новых совпадениях</li>
-        </ul>
-        <button class="btn-price primary" type="button">Выбрать план</button>
-        <div class="price-note">Самый выгодный для регулярного использования</div>
-      </div>
-      <div class="price-card">
-        <div class="price-badge" style="background:var(--violet-bg);color:var(--violet);">Комплексный</div>
-        <div class="price-name">Инвест-проверка</div>
-        <div class="price-desc">Разовая глубокая проверка брокера и компании перед вложением денег</div>
-        <div class="price-amount"><span>$</span>49<span style="font-size:28px">.99</span></div>
-        <div class="price-period">за одну проверку</div>
-        <ul class="price-features">
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Проверка брокера по фото и голосу</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Проверка компании по базе проблемных</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>История жалоб, судебных дел и дефолтов</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Детектор ИИ-изображений для фото брокера</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Полный PDF-отчёт</li>
-        </ul>
-        <button class="btn-price secondary" type="button" style="background:var(--violet-bg);color:var(--violet);">Заказать проверку</button>
-        <div class="price-note">Единоразовый платёж, результат в течение 24 ч</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- FAQ -->
 <section class="sec">
   <div class="wrap">
@@ -1631,8 +1521,7 @@ footer{padding-block:38px;}
       <p style="font-size:15px;color:var(--text-2);">Начни бесплатно — 5 проверок в месяц, без карты</p>
     </div>
     <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <button class="btn" type="button" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">Зарегистрироваться бесплатно</button>
-      <a href="#pricing" class="btn-out">Посмотреть тарифы</a>
+      <button class="btn" type="button" onclick="loginWithGoogle()">Войти через Google</button>
     </div>
   </div>
 </div>
@@ -1649,7 +1538,7 @@ footer{padding-block:38px;}
 </footer>
 
 <!-- FAB: registration (hidden when logged in) -->
-<button class="fab-reg" id="fab-reg" onclick="document.getElementById('reg').scrollIntoView({behavior:'smooth'})">
+<button class="fab-reg" id="fab-reg" onclick="loginWithGoogle()">
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
   <span class="fab-label" data-i18n="nav.register">Регистрация</span>
 </button>
@@ -2093,24 +1982,6 @@ function showLoggedIn(user) {
   document.getElementById('sm-name').textContent = user.name || t('pd_name_default');
   document.getElementById('sm-email').textContent = user.email;
 
-  // Update registration section
-  const card = document.querySelector('.reg-form-card');
-  if (card) {
-    card.innerHTML = `
-      <div style="text-align:center;padding:20px 0;">
-        ${user.avatar_url ? `<img src="${user.avatar_url}" style="width:64px;height:64px;border-radius:50%;margin-bottom:12px;" referrerpolicy="no-referrer">` : ''}
-        <div style="font-size:18px;font-weight:600;color:var(--text);margin-bottom:4px;">${user.name || t('pd_name_default')}</div>
-        <div style="font-size:13px;color:var(--text-3);margin-bottom:20px;">${user.email}</div>
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;">
-          <span style="font-size:13px;color:var(--text-2);">${t('user_card.checks_label')}</span>
-          <span style="font-family:'DM Mono',monospace;font-weight:600;color:var(--text);">${user.checks_used} / ${user.checks_limit}</span>
-        </div>
-        <div style="display:flex;gap:10px;justify-content:center;">
-          <button onclick="openSettings()" style="font-size:13px;padding:8px 16px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--text-2);cursor:pointer;font-family:'DM Sans',sans-serif;">${t('user_card.settings_btn')}</button>
-          <button onclick="clearToken();location.reload();" style="font-size:13px;padding:8px 16px;border-radius:7px;border:none;background:#fdeaea;color:#cc1c1c;cursor:pointer;font-family:'DM Sans',sans-serif;">${t('user_card.logout_btn')}</button>
-        </div>
-      </div>`;
-  }
 }
 
 function toggleProfileDropdown() {
@@ -2141,10 +2012,9 @@ document.addEventListener('click', function(e) {
 });
 
 // ── Google login ──────────────────────────────────────────────────────────────
-document.getElementById('btn-google-login').addEventListener('click', function() {
-  if (getToken()) return;
+function loginWithGoogle() {
   window.location.href = API + '/auth/google';
-});
+}
 
 // ── Load live stats ───────────────────────────────────────────────────────────
 (async function() {
@@ -2192,11 +2062,7 @@ document.getElementById('zone-photo').addEventListener('drop', function(ev) {
 
 async function checkPhoto(file) {
   if (!getToken()) {
-    document.getElementById('reg').scrollIntoView({behavior: 'smooth'});
-    setTimeout(() => {
-      const card = document.querySelector('.reg-form-card');
-      if (card) { card.style.outline = '2px solid var(--accent-br)'; setTimeout(() => card.style.outline = '', 2000); }
-    }, 600);
+    loginWithGoogle();
     return;
   }
   const photoUrl = URL.createObjectURL(file);
@@ -2865,7 +2731,7 @@ let _rScamType = null;
 
 function openReportModal() {
   if (!getToken()) {
-    document.getElementById('reg').scrollIntoView({behavior:'smooth'});
+    loginWithGoogle();
     return;
   }
   _rPhotoFile = null; _rScamType = null;
